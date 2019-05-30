@@ -174,7 +174,7 @@ c.school_year = e.school_year
   c.TEACHER_FLAG = 'x'
   AND e.take_attendance_flag = 'x'
   AND c.staff_type_name IN ('Teacher','Teacher LTO', 'ECE', 'Occasional Teach', 'Teacher SPED')
-  --AND tt.semester = '2'
+  AND tt.semester = '2'
   AND CONVERT(DATETIME,c.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(DATETIME,c.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(VARCHAR,c.start_date,110)   >= CONVERT(DATETIME,'04-SEP-2018', 110)
