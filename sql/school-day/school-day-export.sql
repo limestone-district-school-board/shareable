@@ -1,3 +1,4 @@
+
 SET NOCOUNT ON
 
 select '"BOARDCODE"','"SCHOOLCODE"','"TYPE"','"ACTION"','"PERSONID"','"FIRSTNAME"','"SURNAME"','"CLASSCODE"','"EMAIL"','"HOMEROOM"','"NEWBOARDCODE"','"NEWSCHOOLCODE"'
@@ -127,9 +128,9 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
     --, course_codes c
     , STUDENT_PROGRAM_CLASS_TRACKS t
   WHERE 
-  --a.class_code        = c.course_code
-  --AND a.school_year         = c.school_year
-  --AND a.school_code         = c.school_code
+  -- a.class_code        = c.course_code
+  -- AND a.school_year         = c.school_year
+  -- AND a.school_code         = c.school_code
   a.school_code         = t.school_code
   AND a.school_year         = t.school_year
   AND a.class_code          = t.class_code
