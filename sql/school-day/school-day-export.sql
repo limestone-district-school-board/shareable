@@ -128,7 +128,7 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
     --, course_codes c
     , STUDENT_PROGRAM_CLASS_TRACKS t
   WHERE 
-  -- a.class_code        = c.course_code
+  -- a.class_code              = c.course_code
   -- AND a.school_year         = c.school_year
   -- AND a.school_code         = c.school_code
   a.school_code         = t.school_code
