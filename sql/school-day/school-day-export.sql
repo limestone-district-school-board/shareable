@@ -98,10 +98,10 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
   AND b.take_attendance_flag = 'x'
   AND d.status_indicator_code in ('Active', 'PreReg')
   AND a.school_code in ('NAPDI','GRECS', 'BAYSS')
-  --AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
-  --AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
+  AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
+  AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
-  AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'30-JUN-2020', 110)
+  AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'31-JAN-2020', 110)
 
   --OR a.end_date IS NULL
   --and CONVERT(VARCHAR,a.end_date,110) >= CONVERT(VARCHAR,getdate(),110)
