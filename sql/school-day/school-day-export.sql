@@ -165,7 +165,7 @@ UNION
   AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(VARCHAR,a.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110)
   AND CONVERT(VARCHAR,a.end_date,110) = CONVERT(DATETIME,'26-JUN-2020', 110)
-  and a.class_code like '%BLC%'
+  AND (a.class_code like '%BLC%' OR a.class_code like '%ADULT%')
 
   UNION
   --Selecting Elem class information
