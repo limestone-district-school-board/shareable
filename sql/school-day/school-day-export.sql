@@ -42,9 +42,8 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
   AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
   AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'30-JUN-2020', 110)
   
-  -- secondary students (Napanee)
+  -- secondary students
   UNION
-  
    SELECT '"' + 'LDSB' + '"'				AS BOARDCODE
     , '"' + b.school_code + '"'				AS SCHOOLCODE
     , '"' + 'Student' + '"'					AS TYPE
@@ -73,7 +72,71 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
 		And (school_classes.class_homeroom_flag = 'p')
 		--And (student_program_class_tracks.start_date <= a_effective_date )
 		--And (student_program_class_tracks.end_date >= a_effective_date
-		And (CONVERT(VARCHAR,student_program_class_tracks.start_date,110) >= CONVERT(DATETIME,'30-JAN-2020', 110))
+		And (CONVERT(VARCHAR,student_program_class_tracks.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110))
+		And (CONVERT(VARCHAR,student_program_class_tracks.end_date,110) <= CONVERT(DATETIME,'30-JUN-2020', 110)
+		--AND CONVERT(DATETIME,student_program_class_tracks.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
+		--AND CONVERT(DATETIME,student_program_class_tracks.end_date, 110)	>= CONVERT(DATETIME, getDate(), 110)
+			Or student_program_class_tracks.end_date Is Null)), '') + '"'	AS HOMEROOM
+	, '"' + '' + '"'                        AS NEWBOARDCODE
+	, '"' + '' + '"'                        AS NEWSCHOOLCODE
+
+  FROM student_program_class_tracks a
+    , school_classes b    
+    , persons c
+    --, persons e
+	, term_teachers tt
+    , student_registrations d
+  WHERE a.class_code         = b.class_code
+  AND a.school_code          = b.school_code
+  AND a.school_year          = b.school_year
+  AND a.person_id            = c.person_id
+  --AND b.reporting_teacher	 = e.person_id
+  AND a.school_code          = d.school_code
+  AND a.school_year          = d.school_year
+  AND a.person_id            = d.person_id
+  AND a.school_year          = '20192020'
+  AND tt.school_code = b.school_code
+  AND tt.school_year = b.school_year
+  AND tt.semester = 1
+  AND b.take_attendance_flag = 'x'
+  AND d.status_indicator_code in ('Active', 'PreReg')
+  AND a.school_code in ('NAPDI','GRECS', 'BAYSS')
+  AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
+  AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
+  AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
+  AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'31-JAN-2020', 110)
+
+-- get Secondary students who are in full year courses
+UNION
+     SELECT '"' + 'LDSB' + '"'				AS BOARDCODE
+    , '"' + b.school_code + '"'				AS SCHOOLCODE
+    , '"' + 'Student' + '"'					AS TYPE
+    , '"' + 'A' + '"'						AS ACTION --, CASE d.status_indicator_code WHEN 'Active' THEN 'A' WHEN 'PreReg' THEN 'A' END AS Action
+    , '"' + c.student_no + '"'				AS PERSONID
+    , '"' + c.preferred_first_name + '"'	AS FIRSTNAME
+    , '"' + c.preferred_surname + '"'		AS SURNAME
+    , '"' + IsNull(b.class_code, '') + '"'	AS CLASSCODE
+    --, '"' + '1' + '"'						AS Semester
+    --, '"' + convert(VARCHAR, a.start_date, 120) + '"'              AS Start_date
+    --, '"' + convert(VARCHAR, a.end_date, 120) + '"'                AS End_date
+    , '"' + '' + '"'                        AS EMAIL
+    , '"' + IsNull((Select top 1
+		student_program_class_tracks.class_code
+		From school_classes
+		LEFT Outer Join persons
+		On school_classes.reporting_teacher = persons.person_id
+		inner join student_program_class_tracks
+		on   ( student_program_class_tracks.school_code = school_classes.school_code )
+		And ( student_program_class_tracks.school_year = school_classes.school_year )
+		And ( student_program_class_tracks.class_code = school_classes.class_code )
+		Where
+		(student_program_class_tracks.school_code = a.SCHOOL_CODE)
+		And (student_program_class_tracks.school_year = a.SCHOOL_YEAR)
+		And (student_program_class_tracks.person_id = a.PERSON_ID)
+		And (school_classes.class_homeroom_flag = 'p')
+		--And (student_program_class_tracks.start_date <= a_effective_date )
+		--And (student_program_class_tracks.end_date >= a_effective_date
+		And (CONVERT(VARCHAR,student_program_class_tracks.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110))
 		And (CONVERT(VARCHAR,student_program_class_tracks.end_date,110) <= CONVERT(DATETIME,'30-JUN-2020', 110)
 		--AND CONVERT(DATETIME,student_program_class_tracks.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
 		--AND CONVERT(DATETIME,student_program_class_tracks.end_date, 110)	>= CONVERT(DATETIME, getDate(), 110)
@@ -100,15 +163,11 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
   AND a.school_code in ('NAPDI','GRECS', 'BAYSS')
   AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
-  AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
-  AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'31-JAN-2020', 110)
+  AND CONVERT(VARCHAR,a.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110)
+  AND CONVERT(VARCHAR,a.end_date,110) = CONVERT(DATETIME,'26-JUN-2020', 110)
+  and a.class_code like '%BLC%'
 
-  --OR a.end_date IS NULL
-  --and CONVERT(VARCHAR,a.end_date,110) >= CONVERT(VARCHAR,getdate(),110)
-  --AND c.person_id NOT IN (SELECT person_id FROM li_sp_omitted_students WHERE type='OMIT')
-  --AND a.school_code IN (SELECT school_code FROM li_sp_setting_elem_schools)
-
-    UNION
+  UNION
   --Selecting Elem class information
   SELECT DISTINCT '"' + 'LDSB' + '"'		AS BOARDCODE 
     , '"' + a.school_code + '"'				AS SCHOOLCODE
