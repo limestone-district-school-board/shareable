@@ -36,7 +36,8 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
   AND a.school_year          = '20192020'
   AND b.take_attendance_flag = 'x'
   AND d.status_indicator_code in ('Active', 'PreReg')
-  AND a.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED')
+  AND a.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYRI',
+   'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA')
   --AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
   --AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
@@ -69,10 +70,10 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
 		(student_program_class_tracks.school_code = a.SCHOOL_CODE)
 		And (student_program_class_tracks.school_year = a.SCHOOL_YEAR)
 		And (student_program_class_tracks.person_id = a.PERSON_ID)
-		And (school_classes.class_homeroom_flag = 'p')
+		--And (school_classes.class_homeroom_flag = 'p')
 		--And (student_program_class_tracks.start_date <= a_effective_date )
 		--And (student_program_class_tracks.end_date >= a_effective_date
-		And (CONVERT(VARCHAR,student_program_class_tracks.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110))
+		And (CONVERT(VARCHAR,student_program_class_tracks.start_date,110) >= CONVERT(DATETIME,'30-JAN-2020', 110))
 		And (CONVERT(VARCHAR,student_program_class_tracks.end_date,110) <= CONVERT(DATETIME,'30-JUN-2020', 110)
 		--AND CONVERT(DATETIME,student_program_class_tracks.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
 		--AND CONVERT(DATETIME,student_program_class_tracks.end_date, 110)	>= CONVERT(DATETIME, getDate(), 110)
@@ -97,14 +98,14 @@ SELECT '"' + 'LDSB' + '"'					AS BOARDCODE
   AND a.school_year          = '20192020'
   AND tt.school_code = b.school_code
   AND tt.school_year = b.school_year
-  AND tt.semester = 1
-  AND b.take_attendance_flag = 'x'
+  AND tt.semester = 2
+  --AND b.take_attendance_flag = 'x'
   AND d.status_indicator_code in ('Active', 'PreReg')
-  AND a.school_code in ('NAPDI','GRECS', 'BAYSS')
+  AND a.school_code in ('NAPDI','GRECS', 'BAYSS', 'FROSS')
   AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
-  AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
-  AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'31-JAN-2020', 110)
+  AND CONVERT(VARCHAR,a.start_date,110)   >= CONVERT(DATETIME,'30-JAN-2020', 110)
+  AND CONVERT(VARCHAR,a.end_date,110)    <= CONVERT(DATETIME,'30-JUN-2020', 110)
 
 -- get Secondary students who are in full year courses
 UNION
@@ -133,7 +134,7 @@ UNION
 		(student_program_class_tracks.school_code = a.SCHOOL_CODE)
 		And (student_program_class_tracks.school_year = a.SCHOOL_YEAR)
 		And (student_program_class_tracks.person_id = a.PERSON_ID)
-		And (school_classes.class_homeroom_flag = 'p')
+		--And (school_classes.class_homeroom_flag = 'p')
 		--And (student_program_class_tracks.start_date <= a_effective_date )
 		--And (student_program_class_tracks.end_date >= a_effective_date
 		And (CONVERT(VARCHAR,student_program_class_tracks.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110))
@@ -158,9 +159,9 @@ UNION
   AND a.school_year          = d.school_year
   AND a.person_id            = d.person_id
   AND a.school_year          = '20192020'
-  AND b.take_attendance_flag = 'x'
+  --AND b.take_attendance_flag = 'x'
   AND d.status_indicator_code in ('Active', 'PreReg')
-  AND a.school_code in ('NAPDI','GRECS', 'BAYSS')
+  AND a.school_code in ('NAPDI','GRECS', 'BAYSS', 'FROSS')
   AND CONVERT(DATETIME,a.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(DATETIME,a.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(VARCHAR,a.start_date,110) >= CONVERT(DATETIME,'03-SEP-2019', 110)
@@ -197,11 +198,13 @@ UNION
   AND CONVERT(VARCHAR,t.end_date,110) <= CONVERT(DATETIME,'30-JUN-2020', 110)
   --AND CONVERT(DATETIME,t.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
   --AND CONVERT(DATETIME,t.end_date, 110)	>= CONVERT(DATETIME, getDate(), 110)
-  AND a.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED')
+  AND a.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+   'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA')
   AND a.take_attendance_flag = 'x'
 
   UNION
-  SELECT DISTINCT '"' + 'LDSB' + '"' 				AS BOARDCODE
+select distinct 
+'"' + 'LDSB' + '"' 				AS BOARDCODE
     , '"' + e.school_code + '"' 					AS SCHOOLCODE
     , '"' + 'Teacher' + '"' 						AS TYPE
     , '"' + 'A' + '"' 								AS ACTION
@@ -213,37 +216,35 @@ UNION
     , '"' + '' + '"' 								AS HOMEROOM
 , '"' + '' + '"'                        			AS NEWBOARDCODE
 , '"' + '' + '"'                        			AS NEWSCHOOLCODE
-  FROM LI_TBL_USERNAMES b
+from school_staff ss
 
-inner join persons d on
-d.staff_no = b.usr_emp_number
- 
-inner join term_teachers tt on
-tt.person_id = d.person_id
- 
-inner join school_classes e on
+join TERM_TEACHERS tt
+on ss.person_id = tt.person_id and 
+ss.school_code = tt.school_code and
+ss.school_year = tt.school_year
+
+join school_classes e on
 tt.school_code = e.school_code and
-tt.school_year = e.school_year and
-tt.class_code = e.class_code
+tt.school_year = e.school_year
+and tt.class_code = e.class_code
+
+join persons d on
+d.person_id = ss.person_id
+
+join LI_TBL_USERNAMES b
+on b.usr_emp_number = d.staff_no
  
-inner join school_staff c on
-c.person_id = d.person_id and
-c.school_code = e.school_code and
-c.school_year = e.school_year and
-c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020')
-  WHERE
-  c.TEACHER_FLAG = 'x'
-  AND e.take_attendance_flag = 'x'
-  AND c.staff_type_name IN ('Teacher','Teacher LTO', 'ECE', 'Occasional Teach', 'Teacher SPED')
-  AND tt.semester = '1'
-  --AND CONVERT(DATETIME,c.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
-  --AND CONVERT(DATETIME,c.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
-  AND CONVERT(VARCHAR,c.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
-  AND CONVERT(VARCHAR,c.end_date,110)    <= CONVERT(DATETIME,'25-JUN-2020', 110)
-  AND c.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED')
-    
-  UNION
-  SELECT DISTINCT '"' + 'LDSB' + '"' 				AS BOARDCODE
+where ss.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+ 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA')
+ and ss.school_year = '20192020' AND
+staff_type_name IN ('Teacher','Teacher LTO', 'ECE', 'Occasional Teach', 'Teacher SPED')
+AND ss.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020'
+				AND school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+				'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA'))
+
+UNION
+
+SELECT DISTINCT '"' + 'LDSB' + '"' 				AS BOARDCODE
     , '"' + c.school_code + '"' 					AS SCHOOLCODE
     , '"' + 'Teacher' + '"' 						AS TYPE
     , '"' + 'A' + '"' 								AS ACTION
@@ -258,67 +259,31 @@ c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and sch
   FROM LI_TBL_USERNAMES b
  
 inner join persons d on
-d.staff_no = b.usr_emp_number
+	d.staff_no = b.usr_emp_number
  
 inner join school_staff c on
-c.person_id = d.person_id 
-AND c.school_year = '20192020'
-AND d.person_id not in (select person_id from fs_onsis_teachers 
-						where school_year = '20192020' AND CONVERT(DATETIME,effective_date, 110) <= CONVERT(DATETIME, getDate(), 110))
-AND c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020')
+	c.person_id = d.person_id 
+	AND c.school_year = '20192020'
+	AND d.person_id not in (select person_id from TERM_TEACHERS 
+						where school_year = '20192020')
+	AND c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020'
+				AND school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+				'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA'))
 --and
 --c.school_code = e.school_code and
 --c.school_year = e.school_year
   WHERE
   --e.REPORTING_TEACHER IS NULL AND
   c.staff_type_name IN ('Teacher','Teacher LTO', 'ECE', 'Occasional Teach', 'Teacher SPED')
-  --AND CONVERT(DATETIME,c.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
-  --AND CONVERT(DATETIME,c.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
+  AND CONVERT(DATETIME,c.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
+  AND CONVERT(DATETIME,c.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
   AND CONVERT(VARCHAR,c.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
   AND CONVERT(VARCHAR,c.end_date,110)    <= CONVERT(DATETIME,'30-JUN-2020', 110)
-  AND c.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED')
-  
-  -- get those teachers who are designated reporting teachers, but are not yet set in onsis as such (ie. temporarily covering)
-  
-      UNION
-  SELECT DISTINCT '"' + 'LDSB' + '"' 				AS BOARDCODE
-    , '"' + c.school_code + '"' 					AS SCHOOLCODE
-    , '"' + 'Teacher' + '"' 						AS TYPE
-    , '"' + 'A' + '"' 								AS ACTION
-    , '"' + d.person_id + '"' 						AS PERSONID
-    , '"' + d.preferred_first_name + '"'  			AS FIRSTNAME
-    , '"' + d.preferred_surname + '"' 				AS SURNAME
-    , '"' + e.class_code + '"' 						AS CLASSCODE
-    , '"' + b.usr_username + '@limestone.on.ca"' 	AS Email
-    , '"' + '' + '"' 								AS HOMEROOM
-	, '"' + '' + '"'                        		AS NEWBOARDCODE
-	, '"' + '' + '"'                        		AS NEWSCHOOLCODE
-  FROM LI_TBL_USERNAMES b
- 
-inner join persons d on
-d.staff_no = b.usr_emp_number
- 
-inner join school_staff c on
-c.person_id = d.person_id and
-c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020')
+  AND c.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+   'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA')
 
-inner join school_classes e on
-c.school_code = e.school_code and
-c.school_year = e.school_year and
-e.reporting_teacher = c.person_id
+--------------------
 
-WHERE
-c.person_id not in (select person_id from fs_onsis_teachers where school_year = '20192020' AND CONVERT(DATETIME,effective_date, 110) <= CONVERT(DATETIME, getDate(), 110))
-AND c.school_year = '20192020'
-AND c.staff_type_name IN ('Teacher','Teacher LTO', 'ECE', 'Occasional Teach', 'Teacher SPED')
---AND CONVERT(DATETIME,c.start_date, 110)   <= CONVERT(DATETIME, getDate(), 110)
---AND CONVERT(DATETIME,c.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
-AND CONVERT(VARCHAR,c.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
-AND CONVERT(VARCHAR,c.end_date,110)    <= CONVERT(DATETIME,'30-JUN-2020', 110)
-AND c.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED')
-
--- added to get ECE's that are not in term_teachers
-UNION
 SELECT DISTINCT '"' + 'LDSB' + '"' 				AS BOARDCODE
     , '"' + c.school_code + '"' 					AS SCHOOLCODE
     , '"' + 'Teacher' + '"' 						AS TYPE
@@ -334,10 +299,10 @@ SELECT DISTINCT '"' + 'LDSB' + '"' 				AS BOARDCODE
   FROM LI_TBL_USERNAMES b
  
 inner join persons d on
-d.staff_no = b.usr_emp_number
+	d.staff_no = b.usr_emp_number
  
 inner join fs_onsis_teachers fot on
-fot.person_id = d.person_id
+	fot.person_id = d.person_id
  
 inner join school_classes e on
 fot.school_code = e.school_code and
@@ -348,7 +313,9 @@ inner join school_staff c on
 c.person_id = d.person_id and
 c.school_code = e.school_code and
 c.school_year = e.school_year and
-c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020')
+c.FTE = (select MAX(FTE) from school_staff where person_id = d.person_id and school_year = '20192020'
+				AND school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+				'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA'))
 
 WHERE
 c.person_id in (select person_id from fs_onsis_teachers where school_year = '20192020') -- AND CONVERT(DATETIME,effective_date, 110) <= CONVERT(DATETIME, getDate(), 110))
@@ -359,6 +326,7 @@ AND c.staff_type_name IN ('ECE')
 --AND CONVERT(DATETIME,c.end_date, 110)		>= CONVERT(DATETIME, getDate(), 110)
 AND CONVERT(VARCHAR,c.start_date,110)   >= CONVERT(DATETIME,'03-SEP-2019', 110)
 AND CONVERT(VARCHAR,c.end_date,110)    <= CONVERT(DATETIME,'30-JUN-2020', 110)
-AND c.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC', 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED')
+AND c.school_code in ('SVIEW','ENTPR','TAMWH','SELBY','NAPDI','GRECS','PRCHL','NWBGH','CTRVL','GRECE','LANOL','CLARC',
+ 'BAYSS', 'BAYRI', 'CATAR', 'LANCD', 'RGSIN', 'TRUED', 'FROSS', 'EDACA', 'COLLB', 'JRHEN', 'HOLSG', 'WELBA')
   
 SET NOCOUNT OFF
