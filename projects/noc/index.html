@@ -1,0 +1,28 @@
+<head>
+
+<!--
+window.location.replace('https://limestone.topdesk.net/solutions/open-knowledge-items/item/KI%200850/en_GB/');
+setTimeout("http://10.101.201.65:3000/')" ,3000);
+-->
+
+<script type="text/javascript">
+
+    var sites = ['https://limestone.topdesk.net/solutions/open-knowledge-items/item/KI%200850/en_GB/',
+                 'https://192.168.254.2/p/app/#!/adom/noc/dash5']
+                 //'']
+	
+	
+var interval = 30000; // ms
+setTimeout(step, interval);
+function step() {
+
+    document.getElementById('myIframe').src = sites[1];
+
+}
+ 
+</script>
+
+<iframe id="myIframe" src="https://limestone.topdesk.net/solutions/open-knowledge-items/item/KI%200850/en_GB/" height = "400" width = "800" frameborder = 0 scrolling = "no"></iframe>
+
+
+</head>
