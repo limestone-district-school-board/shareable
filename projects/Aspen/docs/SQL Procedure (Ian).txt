@@ -1,0 +1,65 @@
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.sql.*;
+import java.lang.*;
+import com.follett.fsc.core.k12.business.ModelBroker;
+import com.follett.fsc.core.k12.tools.procedures.ProcedureJavaSource;
+import com.follett.fsc.core.k12.tools.ToolJavaSource;
+
+public class SampleSQL extends ProcedureJavaSource
+{
+    
+    @Override
+    protected void execute() throws Exception
+    {
+       
+
+	List<String> queries = new ArrayList<>();
+        List<String> strText = new ArrayList<>();
+ 	strText.add("Info Column...............");
+
+   
+       	StringBuilder sql = new StringBuilder(256);
+    
+       //Update More Info column with 'Info...' for class attendance popup
+       sql.append("UPDATE STD_A ");
+       sql.append("SET STD_A.STD_FIELDA_097 = 'Info...' ");              
+       sql.append("FROM STUDENT STD_A ");
+       sql.append("WHERE STD_A.STD_FIELDA_097 IS NULL OR STD_A.STD_FIELDA_097 = '' ");
+        
+       queries.add(sql.toString());
+
+       sql = new StringBuilder(256);
+
+
+       
+       Connection connection = null;
+        try
+        {
+            connection = getBroker().borrowConnection();
+            Statement statement = connection.createStatement();
+            
+            for(int i = 0; i < queries.size();i++)
+            {
+                int updated = 0;         
+                updated = statement.executeUpdate(queries.get(i));
+                logMessage(strText.get(i) +  updated + " row(s) affected");
+            }
+        }
+        catch (SQLException sqle)
+        {
+            logMessage(sqle.toString());
+        }
+        finally
+        {
+            if (connection != null)
+            {
+                getBroker().returnConnection();
+            }
+        }
+        (new ModelBroker(getPrivilegeSet())).clearCache();
+        
+    }
+}
