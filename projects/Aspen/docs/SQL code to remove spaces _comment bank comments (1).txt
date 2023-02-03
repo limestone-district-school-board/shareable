@@ -1,0 +1,72 @@
+UPDATE COMMENT_BANK_CODE
+
+SET CBC_CODE =
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(
+
+replace(CBC_CODE, 'gender: he, she', 'gender:he,she')
+
+,'gender: He, She','gender:He,She')
+
+,'gender: his, her','gender:his,her')
+
+,'gender: His, Her','gender:His,Her')
+
+,'gender: him, her','gender:him,her')
+
+,'gender: himself, herself','gender:himself,herself')
+
+,'gender: he','gender:he')
+
+,'gender: He','gender:He')
+
+,'gender: him','gender:him')
+
+,'gender: Him','gender:Him')
+
+,' She}​​​​​​​}​​​​​​​','She}​​​​​​​}​​​​​​​')
+
+,' she}​​​​​​​}​​​​​​​','she}​​​​​​​}​​​​​​​')
+
+,' her}​​​​​​​}​​​​​​​','her}​​​​​​​}​​​​​​​')
+
+,' Her}​​​​​​​}​​​​​​​','Her}​​​​​​​}​​​​​​​')
+
+,' herself}​​​​​​​}​​​​​​​','herself}​​​​​​​}​​​​​​​')
+
+WHERE lower(CBC_CODE) LIKE '%gender: he%'
+
+OR lower(CBC_CODE) LIKE '%gender: hi%'
+
+OR lower(CBC_CODE) LIKE '% she}​​​​​​​}​​​​​​​%'
+
+OR lower(CBC_CODE) LIKE '% her}​​​​​​​}​​​​​​​%'
+
+OR lower(CBC_CODE) LIKE '% herself}​​​​​​​}​​​​​​​%'
+
