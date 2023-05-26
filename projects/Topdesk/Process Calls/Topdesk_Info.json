@@ -1,0 +1,245 @@
+{
+"Teams": {
+"learningSupport": {"id":"d0076582-d2cb-4e80-8883-51e54f99e88e","name":"Learning Technicians"},
+"aspenSupport": {"id":"aff97a8d-4fdd-45c6-a5cb-022cf6148aaf","name":"Aspen Support"},
+"projectorInstallation": {"id":"2942f328-1bdf-4209-ad1b-433e25f3c665","name":"Projectors Installation Team"},
+"testitTeam": {"id":"cd0b1135-723a-4523-b9a4-3f807abc9a57","name":"ITS Team"},
+"itTeam": {"id":"a5361552-9fda-4870-9b50-945f0b9af862","name":"ITS Team"}
+},
+"Operators": [
+	{"id":"0cd600f2-5704-420d-940f-7286db3015e5","status":"operator","name":"Todd, Daniel"},
+	{"id":"4bd31158-4c3b-40db-9aaa-f0fdc15c4d8a","status":"operator","name":"Reid, Cameron"},
+	{"id":"cf4b0aef-a099-4cc3-96e6-75cfaf3b5c86","status":"operator","name":"Asselstine, Darren"},
+	{"id":"a77959c0-5e31-48cf-88af-9be56eb464dd","status":"operator","name":"Irving, Shawn"},
+	{"id":"78ede09f-878c-4672-9ce3-9d84602e9f3f","status":"operator","name":"Munroe, Larry"},
+	{"id":"03d371e0-ff0a-4631-a959-5354cd0bda16","status":"operator","name":"Simpson, Robert"},
+	{"id":"932b1752-7606-4f03-821d-c0e21e076d7d","status":"operator","name":"Utton, William"},
+	{"id":"3710b7d8-0cf8-4c9b-8a59-4f92f55a26ad","status":"operator","name":"Tennyson, Mike"},
+	{"id":"294d7842-0a10-468c-b9d1-eb19f347cdbd","status":"operator","name":"Holland, Sheldon"},
+	{"id":"60f4d2c5-8bd6-4fc1-a7a4-72a5ecd05007","status":"operator","name":"McMullan, Andrew"},
+	{"id":"656ae962-754b-45b5-9daa-89638169b23b","status":"operator","name":"MacMunn, Sean"},
+	{"id":"5133fe1d-0839-4cd4-85b8-11eaafbb44b4","status":"operator","name":"Parrish, Joshua"},
+	{"id":"ad959bb4-53c1-4460-9127-2f4c0b8a921b","status":"operator","name":"Marshall, Terrence"},
+	{"id":"1a74bf93-4aa9-4b1c-ba74-6cfe541a0929","status":"operator","name":"Elliot, Lindsay"},
+	{"id":"124580e9-238d-4c42-8e0d-521a18309d5b","status":"operator","name":"Kim, Danny"}
+],
+"Statuses": {
+	"waitingforuser": {"id":"5fbc9b46-82ef-4fe8-8992-98e150e1722f","name":"Waiting for user"},
+	"inprogress": {"id":"0ee72955-075d-4af7-b02d-5e52e3683164","name":"In progress"},
+	"assigned": {"id":"7a574f81-aff2-47be-8210-bd552073cc88","name":"Auto Assigned"},
+	"closed": {"id":"5350a7dd-a387-4261-91ed-e6f357cbc14e","name":"Closed"}
+},
+"Routes": [
+		{
+        "title": "West Team, Todd, Daniel",
+		"Locations": [
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"0cd600f2-5704-420d-940f-7286db3015e5","status":"operator","name":"Todd, Daniel"}
+		]
+		},
+		{
+        "title": "Kim, Danny",
+		"Locations": [
+		"Educational Services",
+		"Frontenac Learning Centre",
+		"Limestone Education Centre",
+		"Board Offices",
+		"Katarokwi Learning Centre",
+		"Katarokwi Learning Centre Elementary School",
+		"Education Services",
+		"BDLEC"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"124580e9-238d-4c42-8e0d-521a18309d5b","status":"operator","name":"Kim, Danny"}
+		]
+		},
+		{
+        "title": "Donovan, Thomas, West",
+		"Locations": [
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"dcd4fdfd-4525-43f3-b6b0-d1313327150e","status":"operator","name":"Donovan, Tom"}
+		]
+		},
+		{
+        "title": "Parrish, Joshua",
+		"Locations": [
+		"Clarendon Central Public School",
+		"Granite Ridge Education Centre (Elementary)",
+		"Granite Ridge Education Centre (Secondary)",
+		"Land O'Lakes Public School",
+		"North Addington Education Centre (Elementary)",
+		"North Addington Education Centre (Secondary)",
+		"Enterprise Public School",
+		"Tamworth Elementary School",
+		"Prince Charles Public School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"5133fe1d-0839-4cd4-85b8-11eaafbb44b4","status":"operator","name":"Parrish, Joshua"}
+		]
+		},
+		{
+        "title": "Marshall, Terrence",
+		"Locations": [
+				"Virtual Elementary School",
+				"Virtual Secondary School",
+				"The Prince Charles School",
+				"Gateway Community Education Centre",
+				"Napanee District Secondary School",
+				"Southview Public School",
+				"Odessa Public School",
+				"Ernestown Secondary School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"ad959bb4-53c1-4460-9127-2f4c0b8a921b","status":"operator","name":"Marshall, Terrence"}
+		]
+		},
+		{
+        "title": "Central Team, Darren",
+		"Locations": [
+		"Bath Public School",
+		"Amherstview Public School",
+		"Bayridge Community Education Centre",
+		"Bayridge Secondary School",
+		"Bayridge Public School",
+		"Fairfield Elementary School",
+		"Collins Bay Public School",
+		"W.J. Holsgrove Public School",
+		"Lancaster Drive Public School",
+		"Amherst Island Public School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"cf4b0aef-a099-4cc3-96e6-75cfaf3b5c86","status":"operator","name":"Asselstine, Darren"}
+		]
+		},
+		{
+        "title": "Central Team, Larry",
+		"Locations": [
+			"Cataraqui Woods Elementary School",
+			"Frontenac Secondary School",
+			"Module de l'Acadie",
+			"James R. Henderson Public School",
+			"R. Gordon Sinclair Public School",
+			"Truedell Public School",
+			"Welborne Avenue Public School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"78ede09f-878c-4672-9ce3-9d84602e9f3f","status":"operator","name":"Munroe, Larry"}
+		]
+		},
+		{
+        "title": "Central Team, Andrew",
+		"Locations": [
+			"Harrowsmith Public School",
+			"Loughborough Public School",
+			"Perth Road Public School",
+			"Newburgh Public School",
+			"Centreville Public School",
+			"Selby Public School",
+			"Sydenham High School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"60f4d2c5-8bd6-4fc1-a7a4-72a5ecd05007","status":"operator","name":"McMullan, Andrew"}
+		]
+		},
+		{
+        "title": "Central Team, Cam",
+		"Locations": [
+		],
+		"AOR": ["Devices"],
+		"Operators": [
+			{"id":"4bd31158-4c3b-40db-9aaa-f0fdc15c4d8a","status":"operator","name":"Reid, Cameron"}
+		]
+		},
+		{
+        "title": "Central Team, Sheldon",
+		"Locations": [
+		"Sydenham Public School",
+		"Central Public School",
+		"Module Vanier Unit",
+		"Robert Meek - SNAP Program",
+		"Marysville Public School",
+		"Molly Brant Elementary School",
+		"Robert Meek, Transition for Success",
+		"Rideau Public School",
+		"Winston Churchill Public School",
+		"Kingston Secondary School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"294d7842-0a10-468c-b9d1-eb19f347cdbd","status":"operator","name":"Holland, Sheldon"}
+		]
+		},
+		{
+        "title": "Central Team, Will",
+		"Locations": [
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"932b1752-7606-4f03-821d-c0e21e076d7d","status":"operator","name":"Utton, William"}
+		]
+		},
+		{
+        "title": "North Team, Shawn",
+		"Locations": [
+		"Lord Strathcona Public School",
+		"Calvin Park Public School",
+		"Loyalist Collegiate & Vocational Institute",
+		"Centennial Public School",
+		"Module Vanier",
+		"Limestone Community Education",
+		"Polson Park Public School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"a77959c0-5e31-48cf-88af-9be56eb464dd","status":"operator","name":"Irving, Shawn"}
+		]
+		},
+		{
+        "title": "North Team, Sean",
+		"Locations": [
+		"Ecole Kingston East Elementary School",
+		"Elginburg Public School",
+		"Glenburnie Public School",
+		"John Graves Simcoe Public School",
+		"Joyceville Public School",
+		"LaSalle Secondary School",
+		"LaSalle Intermediate School",
+		"Rideau Heights Public School",
+		"Ecole Maple Elementary School",
+		"Storrington Public School"
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"656ae962-754b-45b5-9daa-89638169b23b","status":"operator","name":"MacMunn, Sean"}
+		]
+		},
+		{
+        "title": "West Team, Robert",
+		"Locations": [
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"03d371e0-ff0a-4631-a959-5354cd0bda16","status":"operator","name":"Simpson, Robert"}
+		]
+		},
+		{
+        "title": "West Team, Mike T",
+		"Locations": [
+		],
+		"AOR": ["Devices", "Requesting Security Key"],
+		"Operators": [
+			{"id":"3710b7d8-0cf8-4c9b-8a59-4f92f55a26ad","status":"operator","name":"Tennyson, Mike"}
+		]
+		}
+    ]
+}
