@@ -226,7 +226,6 @@ fs.readFile('\\\\10.227.4.100\\c$\\SFTP-Root\\Aspen\\reading_assessment\\export\
                         scalingConstant = 440;
 				}
 
-
                 let finalCompositeScore = Math.ceil(stepFive + scalingConstant);
 
                 finalCompositeScore = finalCompositeScore || 0;
@@ -523,35 +522,35 @@ fs.readFile('\\\\10.227.4.100\\c$\\SFTP-Root\\Aspen\\reading_assessment\\export\
 								
 								if(adjustedScore02MID < 85)
 									accDiff = 0;
-								else if(adjustedScore02MID = 86)
+								else if(adjustedScore02MID == 86)
 									accDiff = 8;
-								else if(adjustedScore02MID = 87)
+								else if(adjustedScore02MID == 87)
 									accDiff = 16;
-								else if(adjustedScore02MID = 88)
+								else if(adjustedScore02MID == 88)
 									accDiff = 24;
-								else if(adjustedScore02MID = 89)
+								else if(adjustedScore02MID == 89)
 									accDiff = 32;
-								else if(adjustedScore02MID = 90)
+								else if(adjustedScore02MID == 90)
 									accDiff = 40;
-								else if(adjustedScore02MID = 91)
+								else if(adjustedScore02MID == 91)
 									accDiff = 48;
-								else if(adjustedScore02MID = 92)
+								else if(adjustedScore02MID == 92)
 									accDiff = 56;
-								else if(adjustedScore02MID = 93)
+								else if(adjustedScore02MID == 93)
 									accDiff = 64;
-								else if(adjustedScore02MID = 94)
+								else if(adjustedScore02MID == 94)
 									accDiff = 72;
-								else if(adjustedScore02MID = 95)
+								else if(adjustedScore02MID == 95)
 									accDiff = 80;
-								else if(adjustedScore02MID = 96)
+								else if(adjustedScore02MID == 96)
 									accDiff = 88;
-								else if(adjustedScore02MID = 97)
+								else if(adjustedScore02MID == 97)
 									accDiff = 96;
-								else if(adjustedScore02MID = 98)
+								else if(adjustedScore02MID == 98)
 									accDiff = 104;
-								else if(adjustedScore02MID = 99)
+								else if(adjustedScore02MID == 99)
 									accDiff = 112;
-								else if(adjustedScore02MID = 100)
+								else if(adjustedScore02MID == 100)
 									accDiff = 105;
 								
 								rc02MIDScore = score6.value + (score8.value * 2) + accDiff;
@@ -592,42 +591,47 @@ fs.readFile('\\\\10.227.4.100\\c$\\SFTP-Root\\Aspen\\reading_assessment\\export\
 								
 								let adjustedScore02END = score7.value;
 								
+								console.log(adjustedScore02END);
+							
+								
 								if(adjustedScore02END < 85)
 									accDiff = 0;
-								else if(adjustedScore02END = 86)
+								else if(adjustedScore02END == 86)
 									accDiff = 8;
-								else if(adjustedScore02END = 87)
+								else if(adjustedScore02END == 87)
 									accDiff = 16;
-								else if(adjustedScore02END = 88)
+								else if(adjustedScore02END == 88)
 									accDiff = 24;
-								else if(adjustedScore02END = 89)
+								else if(adjustedScore02END == 89)
 									accDiff = 32;
-								else if(adjustedScore02END = 90)
+								else if(adjustedScore02END == 90)
 									accDiff = 40;
-								else if(adjustedScore02END = 91)
+								else if(adjustedScore02END == 91)
 									accDiff = 48;
-								else if(adjustedScore02END = 92)
+								else if(adjustedScore02END == 92)
 									accDiff = 56;
-								else if(adjustedScore02END = 93)
+								else if(adjustedScore02END == 93)
 									accDiff = 64;
-								else if(adjustedScore02END = 94)
+								else if(adjustedScore02END == 94)
 									accDiff = 72;
-								else if(adjustedScore02END = 95)
+								else if(adjustedScore02END == 95)
 									accDiff = 80;
-								else if(adjustedScore02END = 96)
+								else if(adjustedScore02END == 96)
 									accDiff = 88;
-								else if(adjustedScore02END = 97)
+								else if(adjustedScore02END == 97)
 									accDiff = 96;
-								else if(adjustedScore02END = 98)
+								else if(adjustedScore02END == 98)
 									accDiff = 104;
-								else if(adjustedScore02END = 99)
+								else if(adjustedScore02END == 99)
 									accDiff = 112;
-								else if(adjustedScore02END = 100)
+								else if(adjustedScore02END == 100)
 									accDiff = 105;
+								
+								console.log(accDiff);
 								
 								const rc0306Score = score6.value + (score8.value * 2) + (score10.value * 4) + accDiff;
 								
-								//console.log(studentOID + " " + gradeLevel + " " + score_item_reading.SEQ + " " + score6.value + " " + score8.value + " " + accDiff + " " + score10.value + " " + rc0306Score);
+								console.log(studentOID + " " + gradeLevel + " " + score_item_reading.SEQ + " " + score6.value + " " + score8.value + " " + accDiff + " " + score10.value + " " + rc0306Score);
 							
 								final_score = rc0306Score;
 								
