@@ -166,8 +166,9 @@ fs.readFile('\\\\10.227.4.100\\c$\\SFTP-Root\\Aspen\\reading_assessment\\export\
 			var prevGradeLevel = cells[2].replace(/^"(.*)"$/, '$1'); // Grade
 			var gradeLevel = cells[3].replace(/^"(.*)"$/, '$1'); // Real Grade
 			var scoreLevel = cells[4].replace(/^"(.*)"$/, '$1'); // <!-- BEG/MED/END -->
+			var assessmentType = cells[18].replace(/^"(.*)"$/, '$1'); // Dibels or Acadience
 			
-			console.log("Processing " + studentOID + " " + gradeLevel  + " " + gradeLevel);
+			//console.log("Processing " + studentOID + " " + gradeLevel  + " " + gradeLevel);
 			
 			var score1 = {name: 'First Sound Fluency', value: cells[5].length > 2 ? parseInt(cells[5].replace(/^"(.*)"$/, '$1')) : ""};   // First Sound Fluency
 			assessment_values.push(score1);
@@ -194,86 +195,89 @@ fs.readFile('\\\\10.227.4.100\\c$\\SFTP-Root\\Aspen\\reading_assessment\\export\
 			
 			// check type of assessment. Acadience or DIBELS for now?
 			
+			if(assessmentType == 'Dibels')
+			{
 			// assume dibels
-            if (gradeLevel == '08') {
+				if (gradeLevel == '08') {
 
-                // calculate ORF accuracy (words correct / (words correct + Errors) * 100)
-                let ORFAccuracy = (score6.value / (score6.value + score7.value)) * 100;
-                let MazeAdjustedScore = score10.value - (0.5 * score8.value);
+					// calculate ORF accuracy (words correct / (words correct + Errors) * 100)
+					let ORFAccuracy = (score6.value / (score6.value + score7.value)) * 100;
+					let MazeAdjustedScore = score10.value - (0.5 * score8.value);
 
-                let orfWRCweight = 37.69 * score6.value;
+					let orfWRCweight = 37.69 * score6.value;
 
-                let orfWRCErrors = 0.03 * ORFAccuracy;
-                let MAZEweight = 6.75 * MazeAdjustedScore;
+					let orfWRCErrors = 0.03 * ORFAccuracy;
+					let MAZEweight = 6.75 * MazeAdjustedScore;
 
-                let stepTwo = orfWRCweight + orfWRCErrors + MAZEweight;
+					let stepTwo = orfWRCweight + orfWRCErrors + MAZEweight;
 
-                let stepThree = stepTwo - 4824;
-                let stepFour = round(stepThree / 1506, 2);
-                let stepFive = round(stepFour * 40, 0);
+					let stepThree = stepTwo - 4824;
+					let stepFour = round(stepThree / 1506, 2);
+					let stepFive = round(stepFour * 40, 0);
 
-                var scalingConstant = 0;
+					var scalingConstant = 0;
 
-                switch (scoreLevel) {
-                    case 'BEG':
-                        scalingConstant = 360;
-                        break;
-                    case 'MID':
-                        console.log('scorelevel ' + scoreLevel);
-                        scalingConstant = 400;
-                        break;
-                    case 'END':
-                        scalingConstant = 440;
+					switch (scoreLevel) {
+						case 'BEG':
+							scalingConstant = 360;
+							break;
+						case 'MID':
+							console.log('scorelevel ' + scoreLevel);
+							scalingConstant = 400;
+							break;
+						case 'END':
+							scalingConstant = 440;
+					}
+
+					let finalCompositeScore = Math.ceil(stepFive + scalingConstant);
+
+					finalCompositeScore = finalCompositeScore || 0;
+					ORFAccuracy = ORFAccuracy || 0;
+					MazeAdjustedScore = MazeAdjustedScore || 0;
+
+					aspenImportDibelsAssessmentWriteStream.write(studentOID + ',' + assessmentId + ',' + scoreLevel + ',' + gradeLevel + ',' + round(ORFAccuracy) + ',' + round(MazeAdjustedScore) + ','  + finalCompositeScore + '\n');
+					}
+					else if (gradeLevel == '07') {
+
+					// calculate ORF accuracy (words correct / (words correct + Errors) * 100)
+					let ORFAccuracy = (score6.value / (score6.value + score7.value)) * 100;
+					let MazeAdjustedScore = score10.value - (0.5 * score8.value);
+
+					let orfWRCweight = 40.55 * score6.value;
+
+					let orfWRCErrors = 0.06 * ORFAccuracy;
+					let MAZEweight = 7.34 * MazeAdjustedScore;
+
+					let stepTwo = orfWRCweight + orfWRCErrors + MAZEweight;
+
+					let stepThree = stepTwo - 6444;
+					let stepFour = round(stepThree / 1960, 2);
+					let stepFive = round(stepFour * 40, 0);
+
+					var scalingConstant = 0;
+
+					switch (scoreLevel) {
+						case 'BEG':
+							scalingConstant = 360;
+							break;
+						case 'MID':
+							console.log('scorelevel ' + scoreLevel);
+							scalingConstant = 400;
+							break;
+						case 'END':
+							scalingConstant = 440;
+					}
+
+					let finalCompositeScore = Math.ceil(stepFive + scalingConstant);
+
+					finalCompositeScore = finalCompositeScore || 0;
+					ORFAccuracy = ORFAccuracy || 0;
+					MazeAdjustedScore = MazeAdjustedScore || 0;
+
+					aspenImportDibelsAssessmentWriteStream.write(studentOID + ',' + assessmentId + ',' + scoreLevel + ',' + gradeLevel + ',' + round(ORFAccuracy) + ',' + round(MazeAdjustedScore) + ','  + finalCompositeScore + '\n');
 				}
-
-                let finalCompositeScore = Math.ceil(stepFive + scalingConstant);
-
-                finalCompositeScore = finalCompositeScore || 0;
-				ORFAccuracy = ORFAccuracy || 0;
-				MazeAdjustedScore = MazeAdjustedScore || 0;
-
-                aspenImportDibelsAssessmentWriteStream.write(studentOID + ',' + assessmentId + ',' + scoreLevel + ',' + gradeLevel + ',' + round(ORFAccuracy) + ',' + round(MazeAdjustedScore) + ','  + finalCompositeScore + '\n');
-                }
-                else if (gradeLevel == '07') {
-
-                // calculate ORF accuracy (words correct / (words correct + Errors) * 100)
-                let ORFAccuracy = (score6.value / (score6.value + score7.value)) * 100;
-                let MazeAdjustedScore = score10.value - (0.5 * score8.value);
-
-                let orfWRCweight = 40.55 * score6.value;
-
-                let orfWRCErrors = 0.06 * ORFAccuracy;
-                let MAZEweight = 7.34 * MazeAdjustedScore;
-
-                let stepTwo = orfWRCweight + orfWRCErrors + MAZEweight;
-
-                let stepThree = stepTwo - 6444;
-                let stepFour = round(stepThree / 1960, 2);
-                let stepFive = round(stepFour * 40, 0);
-
-                var scalingConstant = 0;
-
-                switch (scoreLevel) {
-                    case 'BEG':
-                        scalingConstant = 360;
-                        break;
-                    case 'MID':
-                        console.log('scorelevel ' + scoreLevel);
-                        scalingConstant = 400;
-                        break;
-                    case 'END':
-                        scalingConstant = 440;
-                }
-
-                let finalCompositeScore = Math.ceil(stepFive + scalingConstant);
-
-                finalCompositeScore = finalCompositeScore || 0;
-				ORFAccuracy = ORFAccuracy || 0;
-				MazeAdjustedScore = MazeAdjustedScore || 0;
-
-                aspenImportDibelsAssessmentWriteStream.write(studentOID + ',' + assessmentId + ',' + scoreLevel + ',' + gradeLevel + ',' + round(ORFAccuracy) + ',' + round(MazeAdjustedScore) + ','  + finalCompositeScore + '\n');
-            }
-			else {
+			}
+			else if (assessmentType == 'Acadience') {
 				for(let i in assessment_values) {
 					let assessment_score_data = assessment_values[i];
 					
