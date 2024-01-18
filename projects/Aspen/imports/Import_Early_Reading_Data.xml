@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<import table-id="tblStdAssess" mode="both" force="true" value-wrapper="" skip-first-row="false">
+  <direct-fields>
+    <direct-field id="asmStdOID" match="true" />
+    <direct-field id="asmSklOID" match="true" />
+    <direct-field id="asmAsdOID" match="true" />
+    <direct-field id="asmGradeLevel" />
+    <direct-field id="asmDate" />
+    <direct-field id="asmFieldA001" />
+  </direct-fields>
+</import>
+
