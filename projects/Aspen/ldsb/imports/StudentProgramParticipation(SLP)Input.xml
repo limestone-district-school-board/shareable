@@ -1,0 +1,14 @@
+<tool-input allow-school-select="true" district-support="false">
+
+ <!-- ******************************************************************** -->
+ <!-- EXTENDED DATA DICTIONARY -->
+ <!-- ******************************************************************** -->
+ 
+ <input name="extendedDictionaryOid" data-type="string" display-type="picklist" display-name="taskGroup.admin.dct.name">
+  <picklist field-id="ddxName">
+   <field id="ddxName" sort="true" />
+   <field id="ddxID" />
+  </picklist>
+ </input>
+
+</tool-input>

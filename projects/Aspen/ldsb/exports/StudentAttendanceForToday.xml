@@ -1,0 +1,17 @@
+<export table-id="tblStdAttend" header-row="true" value-delimiter=",">
+  <field id="relAttStdOid.stdIDLocal" header-source="constant" header-value="relAttStdOid.stdIDLocal" />
+  <field id="relAttStdOid.stdViewName" header-source="constant" header-value="relAttStdOid.stdViewName" />
+  <field id="relAttStdOid.stdGradeLevel" header-source="constant" header-value="relAttStdOid.stdGradeLevel" />
+  <field id="attDate" header-source="constant" header-value="attDate" format="yyyy-MM-dd" />
+  <field id="attPortionAbs" header-source="constant" header-value="attPortionAbs" />
+  <field id="attCodeView" header-source="constant" header-value="attCodeView" />
+  <field id="attAbsentInd" header-source="constant" header-value="attAbsentInd" />
+  <field id="attCodeViewPM" header-source="constant" header-value="attCodeViewPM" />
+  <field id="attAbsentInd02" header-source="constant" header-value="attAbsentInd02" />
+  <field id="relAttSklOid.sklSchoolName" header-source="constant" header-value="relAttSklOid.sklSchoolName" />
+  <field id="relAttStdOid.relStdCtjOid1.ctjRelateCode" header-source="constant" header-value="relAttStdOid.relStdCtjOid1.ctjRelateCode" />
+  <field id="relAttStdOid.relStdCtjOid1.relCtjCntOid.cntViewName" header-source="constant" header-value="relAttStdOid.relStdCtjOid1.relCtjCntOid.cntViewName" />
+  <field id="relAttStdOid.relStdCtjOid1.relCtjCntOid.relCntPsnOid.psnPhone01" header-source="constant" header-value="relAttStdOid.relStdCtjOid1.relCtjCntOid.relCntPsnOid.psnPhone01" />
+  <filter connector="and" field="attDate" operator="equals" source="default" value="today" />
+  <sort field="relAttStdOid.stdIDLocal" direction="asc" />
+</export>

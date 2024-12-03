@@ -1,0 +1,14 @@
+<import table-id="tblStaff" mode="update" force="true" value-delimiter=",">
+  <direct-fields>
+    <direct-field id="stfStaffID" match="true" />
+    <direct-field id="relStfPsnOid.psnNameFirst" update-related-field="true" />
+    <direct-field id="relStfPsnOid.psnNameLast" update-related-field="true" />
+    <direct-field id="stfStaffType" />
+    <direct-field id="stfStatus" />
+    <direct-field id="stfHomeroom" />
+    <direct-field id="stfDeptCode" />
+    <direct-field id="relStfPsnOid.psnGenderCode" update-related-field="true" />
+    <direct-field id="all-stf-MinistryEducatorNumber" type="alias" />
+    <direct-field id="relStfSklOid.sklSchoolName" />
+  </direct-fields>
+</import>

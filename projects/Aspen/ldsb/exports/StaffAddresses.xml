@@ -1,0 +1,18 @@
+<export table-id="tblStaff" header-row="true" value-delimiter=",">
+  <field id="stfStaffID" header-source="constant" header-value="stfStaffID" />
+  <field id="relStfPsnOid.psnNameLast" header-source="constant" header-value="relStfPsnOid.psnNameLast" />
+  <field id="relStfPsnOid.psnNameFirst" header-source="constant" header-value="relStfPsnOid.psnNameFirst" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrStreetNum" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrStreetNum" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrStreetPreD" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrStreetPreD" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrStreetPostD" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrStreetPostD" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrStreetName" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrStreetName" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrStreetType" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrStreetType" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrCity" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrCity" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrState" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrState" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrPostalCode" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrPostalCode" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrAddress01" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrAddress01" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrAddress02" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrAddress02" />
+  <field id="relStfPsnOid.relPsnAdrPhys.adrAddress03" header-source="constant" header-value="relStfPsnOid.relPsnAdrPhys.adrAddress03" />
+  <filter connector="and" field="stfStatus" operator="equalsIgnoreCase" source="constant" value="Active" />
+  <sort field="stfStaffID" direction="asc" />
+</export>

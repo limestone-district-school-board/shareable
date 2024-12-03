@@ -1,0 +1,20 @@
+<!-- *************************************************************** -->
+<!-- REPORT INPUT DEFINITION FOR THE "MARKS GIVEN BY TEACHER" REPORT -->
+<!-- *************************************************************** -->
+
+<tool-input allow-school-select="true" allow-org-select="false">
+
+ <input name="reportTitle" data-type="string" display-type="text" display-name="label.quickReport.5.title" default-value="Marks Given"/>
+ 
+ <input name="startDate" data-type="date" display-type="date" display-name="report.shared.startDate" default-value="firstOfMonth" />
+
+ <input name="endDate" data-type="date" display-type="date" display-name="report.shared.endDate" default-value="today" />
+ 
+ <input name="sort" data-type="string" display-type="select" display-name="report.shared.sort">
+  <option value="STF_NAME_VIEW, MST_COURSE_VIEW, MST_TERM_VIEW" display-name="Staff name, Course" />
+  <option value="MST_COURSE_VIEW, MST_TERM_VIEW, STF_NAME_VIEW" display-name="Course, Staff name" />
+  <option value="COUNT(1) DESC, MST_COURSE_VIEW, MST_TERM_VIEW, STF_NAME_VIEW" display-name="Number of marks (highest first)" />
+  <option value="COUNT(1) ASC, MST_COURSE_VIEW, MST_TERM_VIEW, STF_NAME_VIEW" display-name="Number of marks (lowest first)" />
+ </input>
+ 
+</tool-input>

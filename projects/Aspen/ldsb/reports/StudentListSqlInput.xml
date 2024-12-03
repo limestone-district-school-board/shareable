@@ -1,0 +1,39 @@
+<!-- ************************************************** -->
+<!-- REPORT INPUT DEFINITION FOR "STUDENT LIST" REPORTS -->
+<!-- ************************************************** -->
+
+<tool-input allow-school-select="true" context="com.x2dev.sis.model.beans.SisStudent">
+
+ <!-- ************ -->
+ <!-- REPORT TITLE -->
+ <!-- ************ -->
+
+ <input name="reportTitle" data-type="string" display-type="text" display-name="label.quickReport.5.title" default-value="Student List"/>
+ 
+ <!-- ************ -->
+ <!-- SORT OPTIONS -->
+ <!-- ************ -->
+
+ <input name="sort" data-type="string" display-type="select" display-name="report.shared.sort" default-value="STD_NAME_VIEW">
+  <option value="STD_NAME_VIEW" display-name="report.shared.sort.name"/>
+  <option value="STD_YOG DESC, STD_NAME_VIEW" display-name="report.shared.sort.gradeLevel"/>
+  <option value="STD_HOMEROOM, STD_NAME_VIEW" display-name="report.shared.sort.homeroom"/>
+ </input>
+
+ <!-- *********** -->
+ <!-- ACTIVE-ONLY -->
+ <!-- *********** -->
+
+ <input name="activeOnly" data-type="boolean" display-type="checkbox" display-name="report.shared.activeStudentsOnly" default-value="true"/>
+ 
+ <group header="label.quickChart.2.groupByField" value-from="resource">
+ 
+  <!-- ******************** -->
+  <!-- GROUP BY SCHOOL NAME -->
+  <!-- ******************** -->
+ 
+  <input name="groupBySchool" data-type="boolean" display-type="checkbox" display-name="label.sessionValue.school.name" />
+ 
+ </group>
+ 
+</tool-input>

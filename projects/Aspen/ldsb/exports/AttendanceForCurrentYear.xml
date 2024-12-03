@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export table-id="tblStdAttend" header-row="true">
+  <sort field="attDate" direction="asc" />
+  <sort field="relAttStdOid.stdViewName" />
+  <!-- -->
+  <filter field="attDate" operator="onOrAfter" source="session" value="organization.currentContext.startDate" />
+  <filter field="relAttSklOid.sklOID" operator="equals" source="input" value="schoolOid" />
+  <!-- -->
+  <field id="relAttStdOid.stdViewName" header-source="constant" header-value="StudentName" />
+  <field id="relAttStdOid.stdIDLocal" />
+  <field id="relAttSklOid.sklSchoolName" />
+  <field id="relAttSklOid.sklSchoolID" />
+  <!-- -->
+  <field id="attDate" format="yyyy-MM-dd" />
+  <field id="attCodeView" />
+  <field id="attCodeViewPM" />
+  <field id="attAbsentInd" />
+  <field id="attAbsentInd02" />
+  <field id="attTardyInd" />
+  <field id="attTardyInd02" />
+  <field id="attPortionAbs" />
+  <field id="attTimeView" />
+  <!-- -->
+  <field id="attDate" header-source="constant" header-value="Month" format="MMMMM" />
+  <field id="attDate" header-source="constant" header-value="Weekday" format="EEEEE" />
+  <field id="attOtherCode01" />
+  <field id="attOtherCode02" />
+  <!--
+  <field id="relAttStdOid.relStdCtjOid1.ctjRelateCode" />
+  <field id="relAttStdOid.relStdCtjOid1.relCtjCntOid.cntViewName" />
+  <field id="relAttStdOid.relStdCtjOid1.relCtjCntOid.relCntPsnOid.psnPhone01" />
+  <field id="relAttStdOid.relStdCtjOid1.relCtjCntOid.relCntPsnOid.psnEmail01" />
+  -->
+</export>

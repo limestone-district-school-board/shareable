@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ************************************************************** -->
+<!--    Definition for the "Student Program Participation" Import   -->
+<!-- ************************************************************** -->
+<import table-id="tblStdProgram" skip-first-row="false" mode="both" force="true">
+  <preset-fields>
+    <preset-field id="pgmDdxOID" source="input" value="extendedDictionaryOid" />
+    <preset-field id="all-pgm-SchoolOid" type="alias" source="input" value="schoolOid" />
+  </preset-fields>
+  <direct-fields>
+    <direct-field id="relPgmStdOid.stdIDLocal" match="true" />
+    <direct-field id="pgmActionStart" match="true" format="yyyy-MM-dd" />
+    <direct-field id="pgmActionEnd" format="yyyy-MM-dd" />
+    <direct-field id="pgmProgramCode" match="true" />
+    <direct-field id="all-pgm-SchoolName" type="alias" />
+    <direct-field id="pgm-slp-type" type="alias" />
+    <direct-field id="pgm-slp-code" type="alias" />
+    <direct-field id="pgmFieldA003" />
+    <!-- Minutes of instruction -->
+    <direct-field id="pgmFieldA004" />
+    <!-- Total hours -->
+  </direct-fields>
+</import>
