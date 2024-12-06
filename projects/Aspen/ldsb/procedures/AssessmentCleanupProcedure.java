@@ -447,7 +447,9 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 					 * 
 					 */
 
-					if (isEarlyReadingScreener == true) {
+					if ((isEarlyReadingScreener == true) && ((studentAssessment.getGradeLevelCode() == "SK")
+							|| (studentAssessment.getGradeLevelCode() == "01")
+							|| (studentAssessment.getGradeLevelCode() == "02"))) {
 						// write this to asd00000000ERS ASD_EARLY_READING_SCREENER
 						processERS(studentAssessment);
 					}
@@ -461,6 +463,7 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 
 			logMessage("How many added " + totalCount);
 		}
+
 	}
 
 	public boolean isNullOrEmpty(String str) {
@@ -652,8 +655,8 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 
 							// getBroker().deleteBean(sa);
 
-							// logMessage("Removing ERS due to missing reading assessment: " + sa.getOid() + " " +
-							// element);
+							logMessage(
+									"Removing ERS due to missing reading assessment: " + sa.getOid() + " " + element);
 						}
 
 					} catch (ParseException e) {
