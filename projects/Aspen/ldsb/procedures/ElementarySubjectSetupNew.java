@@ -1,22 +1,19 @@
-package ldsb.procedures;
+package procedures;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
-import org.apache.ojb.broker.query.Criteria;
-import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryByCriteria;
 
 import com.follett.fsc.core.framework.persistence.BeanQuery;
 import com.follett.fsc.core.framework.persistence.SubQuery;
 import com.follett.fsc.core.framework.persistence.X2Criteria;
 import com.follett.fsc.core.k12.beans.QueryIterator;
-import com.follett.fsc.core.k12.beans.School;
 import com.follett.fsc.core.k12.beans.Student;
 import com.follett.fsc.core.k12.beans.X2BaseBean;
 import com.follett.fsc.core.k12.business.ModelBroker;
@@ -27,177 +24,164 @@ import com.x2dev.sis.model.beans.MasterSchedule;
 import com.x2dev.sis.model.beans.Schedule;
 import com.x2dev.sis.model.beans.ScheduleTeacher;
 import com.x2dev.sis.model.beans.SchoolCourse;
+import com.x2dev.sis.model.beans.SisSchool;
 import com.x2dev.sis.model.beans.StudentSchedule;
 import com.x2dev.sis.model.beans.path.SisBeanPaths;
 import com.x2dev.utils.ThreadUtils;
 import com.x2dev.utils.X2BaseException;
 
-public class ElementarySubjectSetup extends ProcedureJavaSource {
+public class ElementarySubjectSetupNew extends ProcedureJavaSource {
 	private static final long serialVersionUID = 1L;
 
 	public static final String TEST_RUN_PARAM = "testRun";
 	public static final String DEFAULT_TEACHER_PARAM = "defaultTeacher";
-	private static final String PARAM_SCHOOL_OID = "schoolOid";
+	private static final String PARAM_SCHOOL_OIDS = "schoolOids";
 
 	private ModelBroker m_modelBroker;
 	private String m_schoolOid;
 	private String m_currentContext;
 
-	private Map<String, School> m_schoolsMap;
-
-	// Constants
-	private static final String INACTIVE_INDICATOR = "0";
-	private static final String ELEMENTARY_DESCRIPTION = "Elementary";
-	private static final String ELEMENTARY_LEVEL_CODE = "01";
-
-	private static final String OUT_OF_BOARD_SCHOOL_OID = "SKL000OnSISOOB";
-
-	@Override
-	protected void initialize() {
-		loadSchools();
-	}
-
 	@Override
 	protected void execute() throws Exception {
 		// Variables
-		
 		List<String> sectionsCreated = new ArrayList<String>();
 
 		// Get input parameters
 		boolean isTestRun = ((Boolean) getParameter(TEST_RUN_PARAM)).booleanValue();
 		boolean defaultTeacher = ((Boolean) getParameter(DEFAULT_TEACHER_PARAM)).booleanValue();
-		
-        m_schoolsMap = new HashMap<>();
-		
-		m_schoolOid = (String) getParameter(PARAM_SCHOOL_OID);
-		
-		if (m_schoolOid != null)
-			
-			
+		String schoolOidsAsString = (String) getParameter(PARAM_SCHOOL_OIDS);
 
-		// Gather subjects mapped out by grade level.
-		Map<String, Collection<SchoolCourse>> schoolCoursesGradeMap = getSchoolCourses();
+		for (String schoolOid : Arrays.asList(schoolOidsAsString.split("\\s,\\s"))) {
+			SisSchool school = m_modelBroker.getBeanByOid(SisSchool.class, schoolOid);
 
-		// Gather Homerooms minus ALLP and LSKKG
-		List<MasterSchedule> masterScheduleList = getHomerooms();
+			logToolMessage(Level.INFO, "Running element for school " + school.getName(), false);
 
-		// Gather all sections
-		List<String> mstSections = getSections();
+			m_schoolOid = schoolOid;
 
-		// Add heading to log if in Preview Mode
-		if (isTestRun) {
-			logMessage("PREVIEW MODE");
-			logMessage("-------------------------------");
-		}
+			// Gather subjects mapped out by grade level.
+			Map<String, Collection<SchoolCourse>> schoolCoursesGradeMap = getSchoolCourses();
 
-		masterScheduleList.forEach(mst -> {
-			// List of students in the Homeroom
-			List<Student> studentList = getStudents(mst.getOid());
+			// Gather Homerooms minus ALLP and LSKKG
+			List<MasterSchedule> masterScheduleList = getHomerooms();
 
-			// Distinct grade levels found in the Homeroom
-			List<String> gradeLevels = getGradeLevels(studentList);
+			// Gather all sections
+			List<String> mstSections = getSections();
 
-			// Get homeroom teacher
-			ScheduleTeacher mtc = getDefaultTeacher(mst);
+			// Add heading to log if in Preview Mode
+			if (isTestRun) {
+				logMessage("PREVIEW MODE");
+				logMessage("-------------------------------");
+			}
 
-			// Print results to log
-			logMessage(mst.getCourseView() + " - Grade Levels : " + gradeLevels.toString() + " Students : "
-					+ studentList.size());
+			masterScheduleList.forEach(mst -> {
+				// List of students in the Homeroom
+				List<Student> studentList = getStudents(mst.getOid());
 
-			String regex = "^(JK|SK|01|02|03|04|05|06|07|08)$";
+				// Distinct grade levels found in the Homeroom
+				List<String> gradeLevels = getGradeLevels(studentList);
 
-			if (!isTestRun) {
+				// Get homeroom teacher
+				ScheduleTeacher mtc = getDefaultTeacher(mst);
 
-				// Setup subjects for gradelevels of students found in the homeroom.
-				gradeLevels.forEach(grdLvl -> {
+				// Print results to log
+				logMessage(mst.getCourseView() + " - Grade Levels : " + gradeLevels.toString() + " Students : "
+						+ studentList.size());
 
-					if (grdLvl.matches(regex)) {
+				String regex = "^(JK|SK|01|02|03|04|05|06|07|08)$";
 
-						Collection<SchoolCourse> schoolCourseCollection = schoolCoursesGradeMap.get(grdLvl);
+				if (!isTestRun) {
 
-						if (schoolCourseCollection != null)
-							logMessage("school course collection size " + schoolCourseCollection.size());
-						else {
-							logMessage("school course collection is null ");
+					// Setup subjects for gradelevels of students found in the homeroom.
+					gradeLevels.forEach(grdLvl -> {
 
-						}
+						if (grdLvl.matches(regex)) {
 
-						if (schoolCourseCollection != null)
-							for (SchoolCourse schoolCourse : schoolCourseCollection) {
+							Collection<SchoolCourse> schoolCourseCollection = schoolCoursesGradeMap.get(grdLvl);
 
-								String courseView = schoolCourse.getNumber() + "-" + mst.getSectionNumber();
-								// logMessage("Course View : " + courseView);
-								// if (subjectVerification(schoolCourse.getOid(),mst.getPrimaryRoomOid()))
-								if (!mstSections.contains(courseView)) {
-
-									// logMessage("*** Section created : " + courseView);
-
-									sectionsCreated.add("1");
-
-									// Create new subject school course
-									MasterSchedule new_mst = new MasterSchedule(m_modelBroker.getPersistenceKey());
-									new_mst.setSchoolCourseOid(schoolCourse.getOid());
-									new_mst.setSectionNumber(mst.getSectionNumber());
-									new_mst.setPrimaryRoomOid(mst.getPrimaryRoomOid());
-									new_mst.setScheduleTermOid(mst.getScheduleTermOid());
-									new_mst.setScheduleOid(mst.getScheduleOid());
-									new_mst.setEnrollmentMax(35);
-									new_mst.setEnrollmentMaxCloseIndicator(true);
-									new_mst.setPlatoonCode(mst.getPlatoonCode());
-									new_mst.setCourseView(mst.getSectionNumber());
-									new_mst.setDescription(schoolCourse.getNumber() + "-" + mst.getSectionNumber());
-									new_mst.setTermView(mst.getScheduleTerm().getCode());
-
-									if (new_mst.isDirty()) {
-										m_modelBroker.saveBeanForced(new_mst);
-									}
-
-									if (defaultTeacher) {
-										// Add default teacher to subject
-										addDefaultTeacher(new_mst, mtc);
-									}
-
-									List enrolTotal = new ArrayList<>();
-									// School manually schedules students into Native Languages
-									if (!schoolCourse.getNumber().contains("0060")) {
-										studentList.forEach(std -> {
-											if (std.getGradeLevel().equals(grdLvl)) {
-												// increment enrolment
-												enrolTotal.add("1");
-
-												// Add new subject to students schedule
-												StudentSchedule ssc = new StudentSchedule(
-														m_modelBroker.getPersistenceKey());
-												ssc.setStudentOid(std.getOid());
-												ssc.setSectionOid(new_mst.getOid());
-												ssc.setScheduleOid(new_mst.getScheduleOid());
-												ssc.setTermView(mst.getScheduleTerm().getCode());
-												if (ssc.isDirty()) {
-													m_modelBroker.saveBeanForced(ssc);
-												}
-											}
-										});
-									}
-									new_mst.setEnrollmentTotal(enrolTotal.size());
-
-									if (new_mst.isDirty()) {
-										m_modelBroker.saveBeanForced(new_mst);
-									}
-
-								}
-								// Checking for tool cancellations
-								ThreadUtils.checkInterrupt();
+							if (schoolCourseCollection != null)
+								logMessage("school course collection size " + schoolCourseCollection.size());
+							else {
+								logMessage("school course collection is null ");
 
 							}
-					}
 
-				});
+							if (schoolCourseCollection != null)
+								for (SchoolCourse schoolCourse : schoolCourseCollection) {
 
-			}
-		});
-		logMessage("-------------------------------");
-		logMessage("Total Homerooms found : " + masterScheduleList.size());
-		logMessage("Sections created : " + sectionsCreated.size());
+									String courseView = schoolCourse.getNumber() + "-" + mst.getSectionNumber();
+									// logMessage("Course View : " + courseView);
+									// if (subjectVerification(schoolCourse.getOid(),mst.getPrimaryRoomOid()))
+									if (!mstSections.contains(courseView)) {
+
+										// logMessage("*** Section created : " + courseView);
+
+										sectionsCreated.add("1");
+
+										// Create new subject school course
+										MasterSchedule new_mst = new MasterSchedule(m_modelBroker.getPersistenceKey());
+										new_mst.setSchoolCourseOid(schoolCourse.getOid());
+										new_mst.setSectionNumber(mst.getSectionNumber());
+										new_mst.setPrimaryRoomOid(mst.getPrimaryRoomOid());
+										new_mst.setScheduleTermOid(mst.getScheduleTermOid());
+										new_mst.setScheduleOid(mst.getScheduleOid());
+										new_mst.setEnrollmentMax(35);
+										new_mst.setEnrollmentMaxCloseIndicator(true);
+										new_mst.setPlatoonCode(mst.getPlatoonCode());
+										new_mst.setCourseView(mst.getSectionNumber());
+										new_mst.setDescription(schoolCourse.getNumber() + "-" + mst.getSectionNumber());
+										new_mst.setTermView(mst.getScheduleTerm().getCode());
+
+										if (new_mst.isDirty()) {
+											m_modelBroker.saveBeanForced(new_mst);
+										}
+
+										if (defaultTeacher) {
+											// Add default teacher to subject
+											addDefaultTeacher(new_mst, mtc);
+										}
+
+										List enrolTotal = new ArrayList<>();
+										// School manually schedules students into Native Languages
+										if (!schoolCourse.getNumber().contains("0060")) {
+											studentList.forEach(std -> {
+												if (std.getGradeLevel().equals(grdLvl)) {
+													// increment enrolment
+													enrolTotal.add("1");
+
+													// Add new subject to students schedule
+													StudentSchedule ssc = new StudentSchedule(
+															m_modelBroker.getPersistenceKey());
+													ssc.setStudentOid(std.getOid());
+													ssc.setSectionOid(new_mst.getOid());
+													ssc.setScheduleOid(new_mst.getScheduleOid());
+													ssc.setTermView(mst.getScheduleTerm().getCode());
+													if (ssc.isDirty()) {
+														m_modelBroker.saveBeanForced(ssc);
+													}
+												}
+											});
+										}
+										new_mst.setEnrollmentTotal(enrolTotal.size());
+
+										if (new_mst.isDirty()) {
+											m_modelBroker.saveBeanForced(new_mst);
+										}
+
+									}
+									// Checking for tool cancellations
+									ThreadUtils.checkInterrupt();
+
+								}
+						}
+
+					});
+
+				}
+			});
+			logMessage("-------------------------------");
+			logMessage("Total Homerooms found : " + masterScheduleList.size());
+			logMessage("Sections created : " + sectionsCreated.size());
+		}
 	}
 
 	private ScheduleTeacher getDefaultTeacher(MasterSchedule mst) {
@@ -340,53 +324,9 @@ public class ElementarySubjectSetup extends ProcedureJavaSource {
 	@Override
 	protected void saveState(UserDataContainer userData) throws X2BaseException {
 		super.saveState(userData);
-		m_schoolOid = userData.getSchoolOid();
+
 		m_currentContext = userData.getCurrentContext().getOid();
 		m_modelBroker = new ModelBroker(userData);
 
 	}
-
-	private void loadSchools() {
-		m_schoolsMap = new HashMap<>();
-
-		m_schoolsMap.putAll(loadSchoolsByCriteria(buildElementarySchoolsCriteria()));
-	}
-
-	private Criteria buildElementarySchoolsCriteria() {
-		Criteria criteria = new Criteria();
-		criteria.addEqualTo(SisBeanPaths.SCHOOL.inactiveIndicator().getPath(), INACTIVE_INDICATOR);
-		criteria.addIn(SisBeanPaths.SCHOOL.schoolLevelCode().getPath(),
-				Arrays.asList(ELEMENTARY_DESCRIPTION, ELEMENTARY_LEVEL_CODE));
-
-		// addExcludedSchoolsCriteria(criteria, null);
-
-		return criteria;
-	}
-
-	private Map<String, School> loadSchoolsByCriteria(Criteria criteria) {
-		Query query = new QueryByCriteria(School.class, criteria);
-		return getBroker().getMapByQuery(query, X2BaseBean.COL_OID, 10);
-	}
-
-	/**
-	 * private void addExcludedSchoolsCriteria(Criteria criteria, String schoolPath) { String path = ""; String
-	 * schoolLevelPath = ""; String schoolOidPath = ""; if (StringUtils.isBlank(schoolPath)) { path =
-	 * getJavaName(ALIAS_SKL_SPECIAL_CONDITION); schoolLevelPath = SisBeanPaths.SCHOOL.schoolLevelCode().getPath();
-	 * schoolOidPath = SisBeanPaths.SCHOOL.oid().getPath(); } else { path = schoolPath + PATH_DELIMITER +
-	 * getJavaName(ALIAS_SKL_SPECIAL_CONDITION); schoolLevelPath = schoolPath + PATH_DELIMITER +
-	 * SisBeanPaths.SCHOOL.schoolLevelCode().getPath(); schoolOidPath = schoolPath + PATH_DELIMITER +
-	 * X2BaseBean.COL_OID; } Criteria notInCriteria = new Criteria(); notInCriteria.addNotIn(path,
-	 * StringUtils.convertDelimitedStringToList(CONTINUE_EDUCATION_CONDITION_CODES, ","));
-	 * 
-	 * Criteria orNullCriteria = new Criteria(); orNullCriteria.addIsNull(path);
-	 * 
-	 * notInCriteria.addOrCriteria(orNullCriteria); criteria.addAndCriteria(notInCriteria);
-	 * 
-	 * Criteria schoolLevelNotEmptyCriteria = new Criteria(); schoolLevelNotEmptyCriteria.addNotNull(schoolLevelPath);
-	 * schoolLevelNotEmptyCriteria.addNotEqualTo(schoolLevelPath, "");
-	 * schoolLevelNotEmptyCriteria.addNotEqualTo(schoolOidPath, OUT_OF_BOARD_SCHOOL_OID);
-	 * 
-	 * criteria.addAndCriteria(schoolLevelNotEmptyCriteria); }
-	 **/
-
 }
