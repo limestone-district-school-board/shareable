@@ -447,9 +447,9 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 					 * 
 					 */
 
-					if ((isEarlyReadingScreener == true) && ((studentAssessment.getGradeLevelCode() == "SK")
-							|| (studentAssessment.getGradeLevelCode() == "01")
-							|| (studentAssessment.getGradeLevelCode() == "02"))) {
+					if ((isEarlyReadingScreener == true) && ((studentAssessment.getGradeLevelCode().equals("SK"))
+							|| (studentAssessment.getGradeLevelCode().equals("01"))
+							|| (studentAssessment.getGradeLevelCode().equals("02")))) {
 						// write this to asd00000000ERS ASD_EARLY_READING_SCREENER
 						processERS(studentAssessment);
 					}
@@ -516,7 +516,7 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 			 **/
 
 			if (stdAssess == null) {
-				// logMessage("Adding new ERD assessment, no previous date" + sa.getStudentOid());
+				logMessage("Adding new ERD assessment, no previous date" + sa.getStudentOid());
 
 				StudentAssessment stdAssessAdd = X2BaseBean.newInstance(StudentAssessment.class,
 						getBroker().getPersistenceKey());

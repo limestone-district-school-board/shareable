@@ -151,7 +151,7 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 
 		Instant now = Instant.now();
 
-		Instant fiveDaysAgo = now.minus(90, ChronoUnit.DAYS);
+		Instant fiveDaysAgo = now.minus(5, ChronoUnit.DAYS);
 
 		// Convert to milliseconds
 		long timestampMillis = fiveDaysAgo.toEpochMilli();
@@ -321,10 +321,10 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 								|| isNullOrEmpty(studentAssessment.getFieldA008()))
 							isIncomplete = true;
 
-						isAccuracyCalc = true;
-						isMazeCalc = true;
-
 						orfAccuracy = Math.round((float) ((dorfWc / (dorfWc + dorfErr)) * 100));
+
+						if (orfAccuracy > 0)
+							isAccuracyCalc = true;
 
 						tmpAcc = orfAccuracy;
 
@@ -333,6 +333,9 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 						if (mazeAdjustedScore < 0) {
 							mazeAdjustedScore = 0;
 						}
+
+						if (mazeAdjustedScore > 0)
+							isMazeCalc = true;
 
 						orfWRCweight = 37.69 * dorfWc;
 
@@ -359,14 +362,17 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 								|| isNullOrEmpty(studentAssessment.getFieldA008()))
 							isIncomplete = true;
 
-						isAccuracyCalc = true;
-						isMazeCalc = true;
-
 						orfAccuracy = Math.round((float) ((dorfWc / (dorfWc + dorfErr)) * 100));
+
+						if (orfAccuracy > 0)
+							isAccuracyCalc = true;
 
 						tmpAcc = orfAccuracy;
 
 						mazeAdjustedScore = mazeCorrect - (0.5 * mazeIncorrect);
+
+						if (mazeAdjustedScore > 0)
+							isMazeCalc = true;
 
 						orfWRCweight = 40.55 * dorfWc;
 
@@ -392,14 +398,17 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 								|| isNullOrEmpty(studentAssessment.getFieldA008()))
 							isIncomplete = true;
 
-						isAccuracyCalc = true;
-						isMazeCalc = true;
-
 						orfAccuracy = Math.round((float) ((dorfWc / (dorfWc + dorfErr)) * 100));
+
+						if (orfAccuracy > 0)
+							isAccuracyCalc = true;
 
 						tmpAcc = orfAccuracy;
 
 						mazeAdjustedScore = mazeCorrect - (0.5 * mazeIncorrect);
+
+						if (mazeAdjustedScore > 0)
+							isMazeCalc = true;
 
 						orfWRCweight = 40.71 * orfWc;
 
@@ -425,14 +434,17 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 								|| isNullOrEmpty(studentAssessment.getFieldA008()))
 							isIncomplete = true;
 
-						isAccuracyCalc = true;
-						isMazeCalc = true;
-
 						orfAccuracy = Math.round((float) ((dorfWc / (dorfWc + dorfErr)) * 100));
+
+						if (orfAccuracy > 0)
+							isAccuracyCalc = true;
 
 						tmpAcc = orfAccuracy;
 
 						mazeAdjustedScore = mazeCorrect - (0.5 * mazeIncorrect);
+
+						if (mazeAdjustedScore > 0)
+							isMazeCalc = true;
 
 						orfWRCweight = 31.12 * orfWc;
 
@@ -458,14 +470,17 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 								|| isNullOrEmpty(studentAssessment.getFieldA008()))
 							isIncomplete = true;
 
-						isAccuracyCalc = true;
-						isMazeCalc = true;
-
 						orfAccuracy = Math.round((float) ((dorfWc / (dorfWc + dorfErr)) * 100));
+
+						if (orfAccuracy > 0)
+							isAccuracyCalc = true;
 
 						tmpAcc = orfAccuracy;
 
 						mazeAdjustedScore = mazeCorrect - (0.5 * mazeIncorrect);
+
+						if (mazeAdjustedScore > 0)
+							isMazeCalc = true;
 
 						orfWRCweight = 36.42 * orfWc;
 
@@ -500,18 +515,18 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 					studentAssessment.setGradeLevelCode(gradeLevel);
 				}
 
-				// if (isAccuracyCalc) {
-				String orfAccuracyAsString = String.valueOf(orfAccuracy);
-				studentAssessment.setFieldA013(orfAccuracyAsString);
-				// }
+				if (isAccuracyCalc) {
+					String orfAccuracyAsString = String.valueOf(orfAccuracy);
+					studentAssessment.setFieldA013(orfAccuracyAsString);
+				}
 
-				// if (isMazeCalc) {
-				String mazeAdjustedScoreAsString = String.valueOf(Math.round(mazeAdjustedScore));
-				studentAssessment.setFieldA014(mazeAdjustedScoreAsString);
-				// }
+				if (isMazeCalc) {
+					String mazeAdjustedScoreAsString = String.valueOf(Math.round(mazeAdjustedScore));
+					studentAssessment.setFieldA014(mazeAdjustedScoreAsString);
+				}
 
-				logMessage("ORF Accuracy " + orfAccuracyAsString + " Student: " + "Maze adjusted score "
-						+ mazeAdjustedScoreAsString + " Student: " + studentAssessment.getStudentOid());
+				// logMessage("ORF Accuracy " + orfAccuracyAsString + " Student: " + "Maze adjusted score "
+				// + mazeAdjustedScoreAsString + " Student: " + studentAssessment.getStudentOid());
 
 				/**
 				 * Testing block if ((studentAssessment.getOid().equals("ASM000000QQfBU"))) { logMessage("RSC Score: " +
@@ -543,6 +558,8 @@ public class ProcessDibelsAssessment extends ProcedureJavaSource {
 					// logMessage("Below benchmark? " + isBelowBenchmark);
 					createOrUpdateBenchmarkAlert(studentAssessment.getStudentOid(), gradeLevel, sequence,
 							isBelowBenchmark);
+				} else if (isAccuracyCalc || isMazeCalc) {
+					getBroker().saveBeanForced(studentAssessment);
 				}
 
 			}
