@@ -2,6 +2,8 @@ package ldsb.procedures;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -451,7 +453,14 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 							|| (studentAssessment.getGradeLevelCode().equals("01"))
 							|| (studentAssessment.getGradeLevelCode().equals("02")))) {
 						// write this to asd00000000ERS ASD_EARLY_READING_SCREENER
-						processERS(studentAssessment);
+
+						/**
+						 * maybe temporary for now. Ignore all MID assessments
+						 * 
+						 */
+						if (!studentAssessment.getFieldA001().equals("MID"))
+							processERS(studentAssessment);
+
 					}
 
 				} catch (Exception e) {
@@ -482,8 +491,20 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 		// Specific assessment definitions
 		// Add in student id, grade
 
-		String currentDateString = "2024-09-05";
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String schoolYearBeginDateString = "2024-09-03";
+		String PeriodEndDateString = "2024-11-30";
+
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+		// Parse the dates
+		LocalDate dateToCompare = LocalDate
+				.parse(sa.getDate().getYear() + "-" + sa.getDate().getMonth() + "-" + sa.getDate().getDay(), formatter);
+		LocalDate startDate = LocalDate.parse("2024-09-05", formatter);
+		LocalDate endDate = LocalDate.parse("2024-12-01", formatter);
+
+		if ((dateToCompare.isBefore(startDate)) && (dateToCompare.isAfter(endDate))) {
+			return;
+		}
 
 		boolean noExistingAssessments = false;
 
@@ -495,6 +516,7 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 		criteria2.addEqualTo(StudentAssessment.COL_ASSESSMENT_DEFINITION_OID, ASD_EARLY_READING_SCREENER);
 		criteria2.addEqualTo(StudentAssessment.COL_STUDENT_OID, sa.getStudentOid());
 		criteria2.addEqualTo(StudentAssessment.COL_GRADE_LEVEL_CODE, sa.getGradeLevelCode());
+		criteria2.addEqualTo(StudentAssessment.COL_FIELD_A003, sa.getOid());
 		// criteria2.addEqualTo(StudentAssessment.COL_DATE, sa.getDate());
 
 		criteria2.addOrderByDescending(StudentAssessment.COL_DATE);
@@ -528,45 +550,23 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 				stdAssessAdd.setGradeLevelCode(sa.getGradeLevelCode());
 				stdAssessAdd.setFieldA001("1");
 				stdAssessAdd.setFieldA002(sa.getFieldA040());
+				stdAssessAdd.setFieldA003(sa.getOid());
+				stdAssessAdd.setFieldA004(sa.getFieldA001());
 
 				totalCount++;
 				getBroker().saveBeanForced(stdAssessAdd);
 			} else {
-				int dateCompare = stdAssess.getDate().compareTo(sa.getDate());
+				// logMessage("Updating student assessment " + sa.getStudentOid());
 
-				if (dateCompare == 0) { // if this record already exists for (StudentAssessment
-					// update fields 001 and 002
+				stdAssess.setDate(sa.getDate());
+				stdAssess.setFieldA001("1");
+				stdAssess.setFieldA002(sa.getFieldA040());
+				stdAssess.setFieldA004(sa.getFieldA001());
 
-					// logMessage("Updating student assessment " + sa.getStudentOid());
+				totalCount++;
 
-					stdAssess.setFieldA001("1");
-					stdAssess.setFieldA002(sa.getFieldA040());
+				getBroker().saveBeanForced(stdAssess);
 
-					// totalCount++;
-
-					// getBroker().saveBeanForced(stdAssess);
-
-				} else if (dateCompare < 0) { // create new and add
-
-					// logMessage("Adding new ERD assessment, previous dates" + sa.getStudentOid());
-
-					StudentAssessment stdAssessAdd = X2BaseBean.newInstance(StudentAssessment.class,
-							getBroker().getPersistenceKey());
-
-					stdAssessAdd.setStudentOid(sa.getStudentOid()); //
-					stdAssessAdd.setAssessmentDefinitionOid(ASD_EARLY_READING_SCREENER); //
-					stdAssessAdd.setDate(sa.getDate());
-					stdAssessAdd.setSchoolOid(sa.getSchoolOid());
-					stdAssessAdd.setGradeLevelCode(sa.getGradeLevelCode());
-					stdAssessAdd.setFieldA001("1");
-					stdAssessAdd.setFieldA002(sa.getFieldA040());
-
-					totalCount++;
-
-					getBroker().saveBeanForced(stdAssessAdd);
-				} else if (dateCompare > 0) {
-					// totalCount++;
-				}
 			}
 
 		} catch (Exception e) {
