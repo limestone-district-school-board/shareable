@@ -80,7 +80,7 @@ public class ProcessAcadienceAssessment extends ProcedureJavaSource {
 			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd:HH-mm-ss");
 			String myDateString = simpleDateFormat.format(myDate);
 
-			String filename = getJob().getTempFolder() + "/ldsb_assessment_imports/aspen_notifications.csv";
+			String filename = getJob().getTempFolder() + "/aspen_notifications.csv";
 
 			File notifFile = new File(filename);
 

@@ -449,16 +449,18 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 					 * 
 					 */
 
-					if ((isEarlyReadingScreener == true) && ((studentAssessment.getGradeLevelCode().equals("SK"))
-							|| (studentAssessment.getGradeLevelCode().equals("01"))
-							|| (studentAssessment.getGradeLevelCode().equals("02")))) {
+					if ((isEarlyReadingScreener == true) && (studentAssessment.getGradeLevelCode() != null)
+							&& ((studentAssessment.getGradeLevelCode().equals("SK"))
+									|| (studentAssessment.getGradeLevelCode().equals("01"))
+									|| (studentAssessment.getGradeLevelCode().equals("02")))) {
 						// write this to asd00000000ERS ASD_EARLY_READING_SCREENER
 
 						/**
 						 * maybe temporary for now. Ignore all MID assessments
 						 * 
 						 */
-						if (!studentAssessment.getFieldA001().equals("MID"))
+						if ((studentAssessment.getFieldA001()) != null
+								&& (!studentAssessment.getFieldA001().equals("MID")))
 							processERS(studentAssessment);
 
 					}
@@ -495,14 +497,14 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 		String PeriodEndDateString = "2024-11-30";
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		// Parse the dates
-		LocalDate dateToCompare = LocalDate
-				.parse(sa.getDate().getYear() + "-" + sa.getDate().getMonth() + "-" + sa.getDate().getDay(), formatter);
+		LocalDate dateToCompare = LocalDate.parse(sdf.format(sa.getDate()), formatter);
 		LocalDate startDate = LocalDate.parse("2024-09-05", formatter);
 		LocalDate endDate = LocalDate.parse("2024-12-01", formatter);
 
-		if ((dateToCompare.isBefore(startDate)) && (dateToCompare.isAfter(endDate))) {
+		if ((dateToCompare.isBefore(startDate)) || (dateToCompare.isAfter(endDate))) {
 			return;
 		}
 
@@ -550,7 +552,7 @@ public class AssessmentCleanupProcedure extends ProcedureJavaSource {
 				stdAssessAdd.setGradeLevelCode(sa.getGradeLevelCode());
 				stdAssessAdd.setFieldA001("1");
 				stdAssessAdd.setFieldA002(sa.getFieldA040());
-				stdAssessAdd.setFieldA003(sa.getOid());
+				// stdAssessAdd.setFieldA003(sa.getOid());
 				stdAssessAdd.setFieldA004(sa.getFieldA001());
 
 				totalCount++;
