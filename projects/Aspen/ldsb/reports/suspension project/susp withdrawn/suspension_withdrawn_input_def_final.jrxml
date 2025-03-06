@@ -1,0 +1,62 @@
+<!-- **************************************************************** -->
+<!-- REPORT INPUT DEFINITIONS FOR THE "SUSPENSION NOTICE" REPORT      -->
+<!-- **************************************************************** -->
+
+<tool-input allow-school-select="true" context="com.x2dev.sis.model.beans.ConductAction" district-support="false">
+
+  <!-- ****************** -->
+  <!-- IF INCLUDE COPIES -->
+  <!-- ****************** -->
+  <input name="age18" data-type="boolean" display-type="checkbox" display-name="Student Is 18+" default-value="false">
+  <disable input-name="contactOids" if-parent-equals="true" />
+  </input>
+  
+  <!-- *************** -->
+  <!-- STUDENT CONTACT -->
+  <!-- *************** -->
+  <input name="contactOids" data-type="string" display-type="picklist" display-name="Student Contacts" required="true">
+  <picklist field-id="relCtjCntOid.cntViewName" required="false" multiple="true">
+   <field id="relCtjCntOid.cntViewName"/>
+   <field id="ctjLivesWith" />
+   <field id="ctjRelateCode" />
+   <field id="ctjFieldA002" />
+   <field id="ctjMailConduct" />
+   <field id="relCtjCntOid.relCntPsnOid.psnEmail01" />
+   <filter field="ctjStdOID" operator="equals" source="current" value="actStdOID" navkey="conduct.act.list.detail" />
+  </picklist>
+ </input>
+ 
+  <!-- *************** -->
+  <!-- VICE PRINCIPAL -->
+  <!-- *************** -->
+   <input name="vicePrincipalStfOids" data-type="string" display-type="picklist" display-name="Vice Principals" required="false">
+  <picklist field-id="stfNameView" required="false" multiple="true">
+   <field id="stfNameView" sort="true" />
+   <filter field="stfSklOID" operator="equals" source="session" value="schoolOid">
+   		<filter field="stfSklOID" operator="equals" connector="or" source="input" value="schoolOid"/>
+   </filter>
+   <filter field="stfStatus" operator="equals" source="preference" value="sys.stf.activeCode" />
+   <filter field="stfStaffType" operator="equals" source="constant" value="Vice Principal">
+   		<filter field="stfStaffType" connector="or" operator="equals" source="constant" value="V. Principal Act"/>
+<filter field="stfStaffType" connector="or" operator="equals" source="constant" value="Vice Principal, Acting"/>
+                <filter field="stfStaffType" connector="or" operator="equals" source="constant" value="Vice Principal, Visiting Exchange"/>
+   </filter>
+  </picklist>
+ </input>
+ 
+  <!-- ****************** -->
+  <!-- IF INCLUDE COPIES -->
+  <!-- ****************** -->
+  <input name="includeCopy" data-type="boolean" display-type="hidden" display-name="Include Copy" default-value="false" />
+
+  <!-- ****************** -->
+  <!-- LETTER DATE -->
+  <!-- ****************** -->
+  <input name="dateOfLetter" data-type="date" display-type="date" default-value="today" display-name="Date of Suspension Letter" />
+  
+  <!-- ****************** -->
+  <!-- EXPELLED FROM ALL SCHOOLS -->
+  <!-- ****************** -->
+  <input name="boardExpelled" data-type="boolean" display-type="hidden" default-value="false" display-name="Expulsion From All Schools In Board"></input>
+
+</tool-input>
