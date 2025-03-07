@@ -8,10 +8,11 @@ select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].user_info where USR_PSN_OID
 
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].user_info where usr_name_view like '%Abdali, TYLER%'
 
-select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_OID = 'STD0000009h0Wv'
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_OID = 'std01000065539'
 
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_FIELDA_083 IS NOT NULL
 
-select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_PSN_OID = 'PSN0000005il1e'
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_PSN_OID = 'PSN000000dBnlg'
 
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].staff where STF_OID = 'stf01000002066'
 
@@ -19,7 +20,7 @@ select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].person where PSN_OID = 'PSN
 
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].COMMENT_BANK_CODE
 
-select top 100 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].person where PSN_NAME_LAST = 'Brown' and PSN_NAME_FIRST = 'Jack'
+select top 100 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].person where PSN_NAME_LAST = 'Bourke' and PSN_NAME_FIRST = 'Adeline'
 
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_program_participation where PGM_DDX_OID like '%Rem%'
 
@@ -46,11 +47,13 @@ where se.enr_skl_oid = 'skl01000000078'
 select distinct ENR_FIELDC_001, ENR_FIELDA_008, ENR_FIELDA_009 from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_enrollment
 
 
-select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].school where skl_oid = 'skl01000000084';
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].school where skl_oid = 'skl01000000004';
 
 select distinct usr_login_status from [ASPEN].[AspenDB-LDSB-PD].[dbo].user_info 
 
-select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_case where stc_name_view like '%Abdali, Marwa%'
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_case where stc_name_view like '%O''Connor, Reegan%'
+
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_case where stc_name_view like '%Connor%'
 
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_case_person where scp_fieldb_004 = 'Shaer Zadeh' --scp_stc_oid = 'STC000000bSqbZ'
 
@@ -62,17 +65,17 @@ select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].contact
 -- FR ACA BEG ASD000000Ut7Vf
 -- Early reading asd00000000ERS
 
-select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_PSN_OID = 'PSN000000GKPki'
+select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_PSN_OID = 'PSN000000hgDug'
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_OID = 'STD000000Po4xs'
 
 select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_FIELDA_081 = '1'
 
-select top 100 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].person where PSN_NAME_LAST = 'Wright' and PSN_NAME_FIRST = 'Emma'
+select top 100 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].person where PSN_NAME_LAST = 'Smijan' and PSN_NAME_FIRST = 'Kylee'
 
-select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_std_oid = 'STD0000009dNOE'
+select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_std_oid = 'STD000000dBnlj'
 and asm_asd_oid = 'asd00000000ERS'
 
-select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].assessment_definition where asd_oid = 'ASD000000Ncwdp'
+select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].assessment_definition where asd_oid = 'ASD000000OuZKM'
 
 select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_asd_oid = 'asd00000000ERS'
 and ASM_LAST_MODIFIED > '1732460505000'
@@ -108,8 +111,6 @@ and ASM_ASD_OID in
  'ASD000000Uu6y1')
  and ASM_FIELDA_040 = '0'
 
-
-
 select distinct ASM_DATE from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_asd_oid = 'asd00000000ERS'
 
 select ASM_STD_OID, ASM_FIELDA_040 from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_asd_oid = 'ASD000000QyTnf'
@@ -128,11 +129,12 @@ and ASM_STD_OID IS NOT NULL
 
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_alert where alr_std_oid = 'std01000048418'
 
-
 --- checking the early reading assessment
 
-select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_asd_oid = 'asd00000000ERS'
-
+select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_asd_oid = 'ASD000000OuZKM'
+and ASM_FIELDA_018 IS NULL
+and ASM_DATE > '2024-09-05'
+order by ASM_DATE desc
 
 -- find this student
 select top 10 * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student where STD_OID = 'STD000000QxhWV'
@@ -146,9 +148,43 @@ and ASM_GRADE_LEVEL_CODE IS NULL and ASM_DATE IS NULL
 select * from student_assessment where asm_asd_oid = 'asd00000000ERS' 
 and ASM_DATE > '2024-09-05'
 
+select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where asm_asd_oid = 'asd00000000ERS'
+and ASM_LAST_MODIFIED > '1732460505000'
+and ASM_GRADE_LEVEL_CODE in ('03','04','05','06')
+
+--- DDT
+
+select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment
+--and ASM_SKL_OID = 'skl01000000002'
+where ASM_ASD_OID in ('ASD000000QyTnf',
+'ASD000000QypQd',
+'ASD000000RBtKH',
+'ASD000000RBtLX',
+'ASD000000RBtMj',
+'ASD000000TcBHV',
+'ASD000000OuZKM',
+'ASD000000RBtPx',
+'ASD000000Ncwdp',
+'ASD000000Ut7Vf',
+'ASD000000Uu6xW',
+'ASD000000Uu6y1',
+'ASD000000Uu6yS',
+'ASD000000Uu6yu',
+'ASD000000hYG2a',
+'ASD000000Ut8EL',
+'ASD000000hLn6D',
+'ASD000000Uu6zL')
+and ASM_DATE > '2024-09-05'
+and ASM_DATE < '2025-01-05'
+and ASM_FIELDA_001 = 'MID'
+order by ASM_DATE asc
+----
+
+
+
 ----- check if student has both fr and en assessments this year
 
-select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where ASM_STD_OID = 'STD000000GKPkl'
+select * from [ASPEN].[AspenDB-LDSB-PD].[dbo].student_assessment where ASM_STD_OID = 'STD000000hgDuj'
 and ASM_DATE > '2024-09-05'
 
 select st.STD_NAME_VIEW, st.STD_ID_LOCAL, st.STD_OID, sk.SKL_SCHOOL_NAME FROM [ASPEN].[AspenDB-LDSB-PD].[dbo].student st
