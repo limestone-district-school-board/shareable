@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?><template>
+  <tab name="tab.student.std.list.detail.demographics">
+    <row>
+      <column>
+        <group header="label.template.legal-name" value-from="resource">
+          <property id="relStdPsnOid.psnFieldC022" label-short="false"/>
+          <property id="relStdPsnOid.psnFieldC023" label-short="false"/>
+          <property id="relStdPsnOid.psnFieldC001" label-short="false"/>
+        </group>
+        <group header="label.template.preferred-name" value-from="resource">
+          <property id="relStdPsnOid.psnNameFirst" label-short="false"/>
+          <property id="relStdPsnOid.psnNameMiddle" label-short="false"/>
+          <property id="relStdPsnOid.psnNameLast" label-short="false"/>
+		  <property id="relStdPsnOid.psnNameSuffix" label-short="false"/>
+        </group>
+
+        <group header="label.template.internal-only" value-from="resource">
+		<property alias="internal-preferred-name" label-short="false"/>
+        <property alias="std_internal_pronoun" label-short="false"/>
+		</group>
+		<group header="label.template.gender" value-from="resource">
+	    <property id="relStdPsnOid.psnGenderCode" label-short="false" required="true"/>
+        <property id="relStdPsnOid.psnFieldC005" label-short="false"/>
+		<property alias="std-pronoun" label-short="false"/>
+		</group>
+      </column>
+      <column>
+        <property id="relStdPsnOid.psnDob" label-short="false" required="true"/>
+        <property alias="all-std-AdultFlag" label-short="false"/>
+        <property alias="all-std-AgeVerification" label-short="false" required="true"/>
+        <property id="relStdPsnOid.psnPrivateInd" label-short="false"/>
+        <horizontal-rule weight="1"/>
+        <property id="relStdPsnOid.psnFieldB006" label-short="false"/>
+        <property id="relStdPsnOid.psnPhone01" label-short="false"/>
+        <property id="relStdPsnOid.psnFieldB007" label-short="false"/>
+        <property id="relStdPsnOid.psnPhone02" label-short="false"/>
+        <property id="relStdPsnOid.psnEmail01" label-short="false"/>
+        <property id="relStdPsnOid.psnEmail02" label-short="false"/>
+		<group header="label.template.language" value-from="resource">
+        <property id="stdHomeLang" label-short="false"/>
+        <property alias="all-std-HomeLanguage2" label-short="false"/>
+        <property alias="all-std-FirstLanguageSpoken" label-short="false"/>
+		</group>
+      </column>
+    </row>
+    <row>
+      <column>
+        <property alias="all-std-Oen" label-short="false"/>
+      </column>
+      <column>
+		<property alias="all-std-stdNumber" label-short="false"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <property id="relStdSklOid.sklSchoolName" label-short="false"/>
+        <property id="stdYog" label-short="false"/>
+        <property alias="all-std-GradeLevel" label-short="false"/>
+        <property id="stdEnrStatus" label-short="false" read-only="true"/>
+        <property id="stdCalendar" label-short="false" required="true"/>
+        <property alias="all-std-Homeroom" label-short="false"/>
+        <property alias="all-std-Counsellor" label-short="false"/>
+        <property alias="all-std-HomeroomTeacher" display="false" label-short="false"/>
+        <property alias="all-std-Grade9Cohort" label-short="false"/>
+      </column>
+      <column>
+        <property id="stdAcadmeTrack" label-short="false"/>
+        <property id="stdHnrRollInd" label-short="false"/>
+        <property id="stdSpedStatus" label-short="false"/>
+        <property alias="all-std-ElementaryAlternateReportCard" label-short="true"/>
+        <property alias="all-std-ProgramDeliveryType" label-short="false"/>
+        <property alias="LDSB-std-Pathways" label-short="false"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <property id="stdLocker" label-short="false">
+          <picklist action="ajaxPickList.do?param=lkrNumber&amp;update=stdLocker" required="true">
+            <field id="lkrNumber" sort="true"/>
+            <filter connector="and" field="lkrSklOID" operator="equals" source="current" value="stdSklOID">
+              <filter connector="and" source="sql" value="LKR_NUMBER NOT IN ( SELECT LKR_NUMBER FROM SCHOOL_LOCKER JOIN STUDENT ON STD_LOCKER = LKR_NUMBER AND STD_SKL_OID = LKR_SKL_OID AND STD_ENROLLMENT_STATUS IN (SELECT VALUE FROM (SELECT CASE WHEN PRF_VALUE IS NOT NULL THEN PRF_VALUE ELSE PRD_DEFAULT_VALUE END AS VALUE FROM SYS_PREFERENCE_DEFINITION LEFT JOIN SYS_PREFERENCE ON PRF_PRD_OID = PRD_OID WHERE PRD_OID IN ('prdX2stdActive','prdX2stdActNoP')) T0 WHERE ISNULL(VALUE,'') != ''))"/>
+            </filter>
+          </picklist>
+        </property>
+        <property alias="all-std-LockerBank" label-short="false"/>
+        <property alias="all-std-LockerSharedInd" label-short="false"/>
+        <property alias="all-std-LockerCycle" label-short="false"/>
+        <property alias="all-std-LockerSerialNumber" label-short="false"/>
+        <horizontal-rule weight="1"/>
+        <property alias="all-std-LockCombinationNumber" label-short="false"/>
+        <property alias="all-std-LockSerialNumber" label-short="false"/>
+        <property alias="all-std-LockBrandName" label-short="false"/>
+      </column>
+      <column>
+        <property alias="all-std-GymLocker" label-short="false"/>
+        <property alias="all-std-GymLockSerialNumber" label-short="false"/>
+        <property alias="all-std-GymLockCombinationNumber" label-short="false"/>
+      </column>
+    </row>
+    <row>
+      <column>
+        <group header="label.template.cross-boundary" value-from="resource">
+          <property alias="all-std-BsidForProgram" label-short="false"/>
+          <property alias="all-std-BsidForAddress" label-short="false"/>
+          <property alias="all-std-TransferReason" label-short="false"/>
+          <property alias="all-std-TransferEndDate" label-short="false"/>
+        </group>
+
+      </column>
+      <column>
+        <group header="label.template.next-year" value-from="resource">
+          <property id="relStdSklNext.sklSchoolName" label-short="false">
+            <picklist relationship="relStdSklNext" required="true">
+              <field id="sklSchoolID"/>
+              <field id="sklSchoolName" sort="true"/>
+            </picklist>
+          </property>
+          <property id="stdNxtHomeroom" label-short="false"/>
+          <property alias="all-std-Retained" label-short="false"/>
+        </group>
+        <group header="label.template.future-demit" value-from="resource">
+          <property alias="all-std-FutureDemitType" label="report.shared.sort.type" onchange="updateDynamicForm(this.name, this.value);" />
+          <property alias="all-std-FutureDemitStatus" label="label.template.stdDetail.futureDemitStatus" />
+          <property alias="all-std-FutureDemitCode" label="report.shared.sort.code" label-short="false"/>
+          <property alias="all-std-FutureDemitBsid" label="label.template.stdDetail.schoolBSID" label-short="false"/>
+          <property alias="all-std-FutureDemitProvince" label="label.province" label-short="false"/>
+          <property alias="all-std-FutureDemitCountry" label="label.template.stdDetail.country" label-short="false"/>
+        </group>
+      </column>
+    </row>
+    <include context="student.std.list.detail.contacts.include" read-only="false"/>
+    <include context="student.std.list.detail.enrolment.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.addresses-phones">
+    <include context="student.std.list.detail.address-phone.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.citizenship">
+    <include context="student.std.list.detail.citizenship.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.alerts">
+    <include context="student.std.list.detail.alerts.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.photo">
+    <include context="student.std.list.detail.photo.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.programs">
+    <include context="student.std.list.detail.programs.include.ldsb" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.accommodations">
+    <include context="student.std.list.detail.accommodations.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.achievement">
+    <include context="student.std.list.detail.achievement.include" read-only="false"/>
+  </tab>
+  <tab name="tab.student.std.list.detail.assessment">
+    <include context="student.std.list.detail.assessment.include.ldsb" read-only="false"/>
+  </tab>
+  <tab name="FOI">
+    <row>
+      <column>
+        <property alias="LDSB-std-PermLocalTrips" label-short="false"/>
+        <property alias="LDSB-std-PermIntramuralActivities" label-short="false"/>
+        <property alias="LDSB-std-PermInfoDisplNewsLtrYB" label-short="false"/>
+        <property alias="LDSB-std-PermInfoPublicDispl" label-short="false"/>
+        <property alias="LDSB-std-PermInfoMPMPP" label-short="false"/>
+        <property alias="LDSB-std-PermSocMedia" label-short="false"/>
+        <property alias="LDSB-std-PermInfo2Media" label-short="false"/>
+        <property alias="LDSB-std-PermInfoEduRel" label-short="false"/>
+      </column>
+      <column>
+        <group header="SECONDARY STUDENT ONLY:" value-from="literal">
+          <property alias="LDSB-std-PermAllItems" label-short="false"/>
+          <property alias="LDSB-std-PermDiscloseAll2Parent" label-short="false"/>
+          <property alias="LDSB-std-PermDiscloseOSR" label-short="false"/>
+          <property alias="LDSB-std-PermDiscloseNonOSR" label-short="false"/>
+        </group>
+      </column>
+    </row>
+  </tab>
+  <tab name="tab.onsis">
+    <include context="student.std.list.detail.onsis.include" read-only="false"/>
+  </tab>
+  <tab name="Transitions">
+    <row>
+      <block border="right">
+        <line border="none" shaded="#dedede">
+          <spacer/>
+        </line>
+        <line border="none" shaded="#dedede">
+          <cell border="none" cell-span="1" line-span="1" shaded="#dedede">
+            <text font-size="medium">Please refer to student's Transition Journal Entries for additional notes</text>
+          </cell>
+        </line>
+      </block>
+    </row>
+    <row>
+      <column>
+        <group header="Strengths and Challenges" value-from="literal">
+          <property alias="LDSB-std-Attendance" label-short="false"/>
+          <property alias="LDSB-std-Engagement" label-short="true"/>
+          <property alias="LDSB-std-Literacy" label-short="false"/>
+          <property alias="LDSB-std-Arts" label-short="true"/>
+          <property alias="LDSB-std-Sports" label-short="true"/>
+          <property alias="LDSB-std-Technology" label-short="true"/>
+          <property alias="LDSB-std-Writing" label-short="false"/>
+          <property alias="LDSB-std-Mathematics" label-short="false"/>
+          <property alias="LDSB-std-LiteracyModification" label-short="true"/>
+          <property alias="LDSB-std-MathModification" label-short="true"/>
+          <property alias="LDSB-std-TransistionsComment" label-short="true"/>
+        </group>
+      </column>
+      <column>
+        <group header="Interventions and Recommendations" value-from="literal">
+          <property alias="LDSB-std-ACWsupport" label-short="false"/>
+          <property alias="LDSB-std-AttendanceSupport" label-short="false"/>
+          <property alias="LDSB-std-CommunitySupport" label-short="false"/>
+          <property alias="LDSB-std-EducationalSupport" label-short="false"/>
+          <property alias="LDSB-std-ELLsupport" label-short="false"/>
+          <property alias="LDSB-std-IndigenousStudent" label-short="true"/>
+          <property alias="LDSB-std-IndigenousCultural" label-short="false"/>
+        </group>
+      </column>
+    </row>
+  </tab>
+</template>
